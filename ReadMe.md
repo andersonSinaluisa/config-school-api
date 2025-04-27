@@ -110,7 +110,11 @@ Endpoint	Descripción
 Actualmente los endpoints son de acceso libre para pruebas. Puedes añadir autenticación vía token o JWT en futuras versiones.
 
 👨‍💻 Autor
-Desarrollado con ❤️ por [Tu Nombre]
+Desarrollado con ❤️ por (Anderson Sinaluisa)[https://andersonsinaluisa.com].
+Puedes contactarme a través de:
+- 📧 Email: (andersonsinaluisa@gmail.com)[mailto:andersonsinaluisa@gmail.com]
+- 💼 LinkedIn: (Anderson Sinaluisa)[https://www.linkedin.com/in/andersonsinaluisa/]
+- 🌐 Web: (Anderson Sinaluisa)[https://andersonsinaluisa.com]
 
 📄 Licencia
 Este proyecto está bajo la licencia MIT.
