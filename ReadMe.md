@@ -37,14 +37,13 @@ Allow: GET, HEAD, OPTIONS
 Content-Type: application/json
 Vary: Accept
 json
-Copiar
-Editar
 {
     "courses": "http://127.0.0.1:8000/courses/",
     "levels": "http://127.0.0.1:8000/levels/",
     "subjects": "http://127.0.0.1:8000/subjects/",
     "course-subjects": "http://127.0.0.1:8000/course-subjects/"
 }
+```
 🛠️ Tecnologías
 🐍 Python 3.x
 
@@ -89,8 +88,7 @@ pip install -r requirements.txt
 
 ```bash
 python manage.py migrate
-
-    
+  
 ```
 
 
