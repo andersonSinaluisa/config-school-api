@@ -1,0 +1,22 @@
+{% extends "rest_framework/base.html" %}
+
+
+{% block title %}🚀 API Navegable{% endblock %}
+
+{% block branding %}
+<h1 class="text-3xl font-bold text-blue-600">🚀 
+    API Configuración Escolar
+</h1>
+{% endblock %}
+
+{% block content %}
+<div class="bg-white shadow rounded p-6 mt-4">
+    {{ block.super }}
+</div>
+{% endblock %}
+
+{% block footer %}
+<div class="text-center text-gray-400 mt-8">
+    Desarrollado con ❤️ usando Django REST Framework & TailwindCSS
+</div>
+{% endblock %}
