@@ -81,6 +81,8 @@ WSGI_APPLICATION = "schoolconfig.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
+print("DB_NAME:", os.getenv("DB_NAME"))
+print("DB_PASSWORD:", os.getenv("DB_PASSWORD"))
 
 DATABASES = {
     "default": {

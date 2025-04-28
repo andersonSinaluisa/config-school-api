@@ -7,7 +7,7 @@ from django.utils import timezone
 
 class SectionOrmRepository(SectionRepository):
     def all(self):
-        sections = SectionModel.objects.filter(deleted=False)
+        sections = SectionModel.objects.filter(deleted=False).order_by('id')
 
         return [
             Section(

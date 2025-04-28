@@ -17,7 +17,7 @@ class LevelOrmRepository(LevelRepository):
         
     def all(self):
         """Get all levels."""
-        levels = LevelModel.objects.filter(deleted=False)
+        levels = LevelModel.objects.filter(deleted=False).order_by('id')
         return [Level(
             id=level.id,
             name=level.name,

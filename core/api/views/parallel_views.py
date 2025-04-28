@@ -1,5 +1,6 @@
 from rest_framework.viewsets import ViewSet
 
+from core.api.configuration.pagination import StandardResultsSetPagination
 from core.application.serializers.parallel_serializer import ParallelSerializer
 from core.container import Container
 from rest_framework.response import Response
@@ -27,9 +28,12 @@ class ParallelViewSet(ViewSet):
         """
         # Implement your logic here
         parallels = self.get_all_parallels.execute()
-        serializer = self.serializer_class(parallels, many=True)
-        
-        return Response(serializer.data, status=status.HTTP_200_OK)
+        paginator = StandardResultsSetPagination(request, parallels)
+        paginated_data = paginator.paginate_queryset()
+
+        serializer = self.serializer_class(paginated_data, many=True)
+
+        return paginator.get_paginated_response(serializer.data)
 
     def create(self, request, *args, **kwargs):
         """

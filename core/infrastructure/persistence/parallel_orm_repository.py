@@ -9,7 +9,7 @@ from django.utils import timezone
 class ParallelORMRepository(ParallelRepository):
     def all(self):
         """Get all parallels."""
-        parallels = ParallelModel.objects.filter(deleted=False)
+        parallels = ParallelModel.objects.filter(deleted=False).order_by('id')
         return [Parallel(
             id=parallel.id,
             name=parallel.name,

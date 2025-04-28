@@ -8,7 +8,7 @@ from django.utils import timezone
 
 class SchoolYearOrmRepository(SchoolYearRepository):
     def all(self):
-        school_years = SchoolYearModel.objects.filter(deleted=False)
+        school_years = SchoolYearModel.objects.filter(deleted=False).order_by('id')
 
         return [
             SchoolYear(

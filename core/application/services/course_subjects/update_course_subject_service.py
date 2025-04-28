@@ -1,3 +1,4 @@
+from core.domain.entities.couse_subject import CourseSubject
 from core.domain.repositories.course_subject_repository import CourseSubjectRepository
 from rest_framework.exceptions import NotFound
 from django.core.exceptions import ObjectDoesNotExist
@@ -5,7 +6,7 @@ class UpdateCourseSubjectService:
     def __init__(self, course_subject_repository:CourseSubjectRepository):
         self.course_subject_repository = course_subject_repository
 
-    def execute(self, id:int, course_id:int, subject_id:int, hours_per_week:int, is_required:bool):
+    def execute(self, id:int, courseId:int, subjectId:int, hoursPerWeek:int, isRequired:bool):
         """
         Update an existing course subject.
         Args:
@@ -17,12 +18,14 @@ class UpdateCourseSubjectService:
         Returns:
             CourseSubject: The updated course subject object.
         """
-        try:        
-            course_subject = self.course_subject_repository.get(id)
-            course_subject.courseId = course_id
-            course_subject.subjectId = subject_id
-            course_subject.hoursPerWeek = hours_per_week
-            course_subject.isRequired = is_required
+        try:
+            course_subject = CourseSubject(
+                id=id,
+                courseId=courseId,
+                subjectId=subjectId,
+                hoursPerWeek=hoursPerWeek,
+                isRequired=isRequired
+            )
             
             return self.course_subject_repository.update(course_subject)
         except ObjectDoesNotExist:

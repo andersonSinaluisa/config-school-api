@@ -23,7 +23,7 @@ class SubjectOrmRepository(SubjectRepository):
         
     def all(self):
         """Get all subjects."""
-        subjects = SubjectModel.objects.filter(deleted=False)
+        subjects = SubjectModel.objects.filter(deleted=False) .order_by('id')
         return [Subject(
             id=subject.id,
             name=subject.name,

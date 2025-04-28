@@ -1,30 +1,30 @@
 from core.domain.entities.course import Course
 from core.domain.entities.couse_subject import CourseSubject
-from core.domain.repositories.course_repository import CourseRepository
+from core.domain.repositories.course_subject_repository import CourseSubjectRepository
 from core.models import CourseSubjectModel
 
 
-class CourseSubjectOrmRepository(CourseRepository):
+class CourseSubjectOrmRepository(CourseSubjectRepository):
     def get(self, course_id: str):
         course_subject = CourseSubjectModel.objects.get(
             id=course_id, deleted=False)
         return CourseSubject(
             courseId=course_subject.id,
             hoursPerWeek=course_subject.hoursPerWeek,
-            id=course_subject.courseId,
-            subjectId=course_subject.subjectId,
+            id=course_subject.course.id,
+            subjectId=course_subject.subject.id,
             isRequired=course_subject.isRequired
         )
 
     def all(self):
         course_subjects = CourseSubjectModel.objects.filter(
-            deleted=False).all()
+            deleted=False).order_by('id')
         return [
             CourseSubject(
-                courseId=course_subject.id,
+                id=course_subject.id,
                 hoursPerWeek=course_subject.hoursPerWeek,
-                id=course_subject.courseId,
-                subjectId=course_subject.subjectId,
+                courseId=course_subject.course.id,
+                subjectId=course_subject.subject.id,
                 isRequired=course_subject.isRequired
             ) for course_subject in course_subjects
         ]
@@ -39,8 +39,8 @@ class CourseSubjectOrmRepository(CourseRepository):
         return CourseSubject(
             courseId=course_subject.id,
             hoursPerWeek=course_subject.hoursPerWeek,
-            id=course_subject.courseId,
-            subjectId=course_subject.subjectId,
+            id=course_subject.course.id,
+            subjectId=course_subject.subject.id,
             isRequired=course_subject.isRequired
         )
 
@@ -66,14 +66,14 @@ class CourseSubjectOrmRepository(CourseRepository):
         return CourseSubject(
             courseId=course_subject.id,
             hoursPerWeek=course_subject.hoursPerWeek,
-            id=course_subject.courseId,
-            subjectId=course_subject.subjectId,
+            id=course_subject.course.id,
+            subjectId=course_subject.subject.id,
             isRequired=course_subject.isRequired
         )
 
     def exist_by_course_and_subject(self, course_id, subject_id):
         return CourseSubjectModel.objects.filter(
-            courseId=course_id,
-            subjectId=subject_id,
+            course_id=course_id,
+            subject_id=subject_id,
             deleted=False
         ).exists()

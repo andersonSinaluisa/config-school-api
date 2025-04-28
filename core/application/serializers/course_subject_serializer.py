@@ -3,7 +3,7 @@ from rest_framework.serializers import Serializer,CharField, IntegerField, Boole
 
 class CourseSubjectSerializer(Serializer):
     id = IntegerField(read_only=True)
-    course_id = IntegerField(required=True)
-    subject_id = IntegerField(required=True)
-    hours_per_week = IntegerField(required=True)
-    is_required = BooleanField(required=True)
+    courseId = IntegerField(required=True)
+    subjectId = IntegerField(required=True)
+    hoursPerWeek = IntegerField(required=True)
+    isRequired = BooleanField(required=True)

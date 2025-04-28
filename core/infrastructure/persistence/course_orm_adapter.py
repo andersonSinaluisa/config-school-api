@@ -23,7 +23,7 @@ class CourseORMAdapter(CourseRepository):
             name=course.name,
             level_id=course.level.id,
             description=course.description
-        ) for course in CourseModel.objects.filter(deleted=False)]
+        ) for course in CourseModel.objects.filter(deleted=False).order_by('id')]
 
     def create(self, course):
         return CourseModel.objects.create(

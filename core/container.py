@@ -185,6 +185,7 @@ class Container(containers.DeclarativeContainer):
         parallel_repository=list_parallel_respository,
         course_repository=course_repository,
         section_repository=section_repository,
+        school_year_repository=school_year_repository
     )
     
     update_parallel_service = providers.Factory(
@@ -192,6 +193,8 @@ class Container(containers.DeclarativeContainer):
         parallel_repository=list_parallel_respository,
         course_repository=course_repository,
         section_repository=section_repository,
+        school_year_repository=school_year_repository
+
     )
     
     

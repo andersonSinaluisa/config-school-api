@@ -7,7 +7,7 @@ from core.domain.entities.couse_subject import CourseSubject
 class CourseSubjectRepository(ABC):
 
     @abstractmethod
-    def all(self)-> List[CourseSubject]:
+    def all(self) -> List[CourseSubject]:
         pass
 
 
