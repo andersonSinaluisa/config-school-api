@@ -12,7 +12,7 @@ class LevelOrmRepository(LevelRepository):
             id=level.id,
             name=level.name,
             description=level.description,
-            order=level.order
+            order=level.order,
         )
         
     def all(self):

@@ -2,6 +2,8 @@
 """
 Course ORM Adapter for interacting with the CourseModel.
 """
+from operator import le
+
 from django.utils import timezone
 from core.domain.repositories.course_repository import CourseRepository
 from core.models import CourseModel
@@ -15,14 +17,16 @@ class CourseORMAdapter(CourseRepository):
             id=course.id,
             name=course.name,
             level_id=course.level.id,
-            description=course.description
+            description=course.description,
+            level=course.level
         )
     def all(self):
         return [Course(
             id=course.id,
             name=course.name,
             level_id=course.level.id,
-            description=course.description
+            description=course.description,
+            level=course.level
         ) for course in CourseModel.objects.filter(deleted=False).order_by('id')]
 
     def create(self, course):

@@ -1,5 +1,7 @@
 from dataclasses import dataclass
 
+from core.domain.entities.course import Course
+
 @dataclass
 class CourseSubject:
     id: int
@@ -7,7 +9,7 @@ class CourseSubject:
     subjectId: int
     hoursPerWeek: int
     isRequired: bool
-
+    course: Course = None
     
     def __post_init__(self):
         if not self.courseId:

@@ -16,7 +16,11 @@ class ParallelORMRepository(ParallelRepository):
             course_id=parallel.course.id,
             capacity=parallel.capacity,
             section_id=parallel.section.id,
-            school_year_id=parallel.schoolYear.id
+            school_year_id=parallel.schoolYear.id,
+            course=parallel.course,
+            section=parallel.section,
+            school_year = parallel.schoolYear
+
         ) for parallel in parallels]
 
     def get(self, parallel_id):
@@ -27,7 +31,10 @@ class ParallelORMRepository(ParallelRepository):
             course_id=parallel.course.id,
             capacity=parallel.capacity,
             section_id=parallel.section.id,
-            school_year_id=parallel.schoolYear.id
+            school_year_id=parallel.schoolYear.id,
+            course=parallel.course,
+            section=parallel.section,
+            school_year=parallel.schoolYear
         )
 
     def create(self, parallel):

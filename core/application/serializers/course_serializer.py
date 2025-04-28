@@ -1,11 +1,13 @@
 from rest_framework import serializers
 
+from core.application.serializers.level_serializer import LevelSerializer
+
 class CourseSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=255)
     level_id = serializers.IntegerField()
     description = serializers.CharField(max_length=255)
-    
+    level = LevelSerializer(read_only=True)
     
     def validate(self, data):
         # Custom validation logic can be added here if needed

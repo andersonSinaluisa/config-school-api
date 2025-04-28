@@ -13,7 +13,9 @@ class CourseSubjectOrmRepository(CourseSubjectRepository):
             hoursPerWeek=course_subject.hoursPerWeek,
             id=course_subject.course.id,
             subjectId=course_subject.subject.id,
-            isRequired=course_subject.isRequired
+            isRequired=course_subject.isRequired,
+            course=course_subject.course,
+
         )
 
     def all(self):
@@ -25,7 +27,9 @@ class CourseSubjectOrmRepository(CourseSubjectRepository):
                 hoursPerWeek=course_subject.hoursPerWeek,
                 courseId=course_subject.course.id,
                 subjectId=course_subject.subject.id,
-                isRequired=course_subject.isRequired
+                isRequired=course_subject.isRequired,
+                course=course_subject.course,
+
             ) for course_subject in course_subjects
         ]
 

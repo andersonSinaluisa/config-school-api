@@ -7,7 +7,6 @@ class Level:
     description: str
     order: int
     
-    
     def __post_init__(self):
         if not self.name:
             raise ValueError("Name cannot be empty")

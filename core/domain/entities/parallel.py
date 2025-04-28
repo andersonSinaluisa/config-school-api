@@ -1,5 +1,9 @@
 from dataclasses import dataclass
 
+from core.domain.entities.course import Course
+from core.domain.entities.school_year import SchoolYear
+from core.domain.entities.section import Section
+
 @dataclass
 class Parallel:
     id: int
@@ -8,6 +12,10 @@ class Parallel:
     capacity: int
     section_id: int
     school_year_id:int
+    course :Course = None
+    section :Section = None
+    school_year:SchoolYear = None
+    
     def __str__(self):
         return self.name.__str__()
 
