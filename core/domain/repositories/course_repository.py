@@ -28,5 +28,13 @@ class CourseRepository(ABC):
         pass
     
 
+    @abstractmethod
+    def exist_by_name(self, name: str) -> bool:
+        """Check if a course exists by its name."""
+        pass
     
+    @abstractmethod
+    def exist_by_id(self, course_id: str) -> bool:
+        """Check if a course exists by its ID."""
+        pass
     

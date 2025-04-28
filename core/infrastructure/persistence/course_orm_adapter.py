@@ -50,3 +50,7 @@ class CourseORMAdapter(CourseRepository):
     
     def exist_by_name(self, name: str) -> bool:
         return CourseModel.objects.filter(name=name, deleted=False).exists()
+    
+    
+    def exist_by_id(self, course_id: str) -> bool:
+        return CourseModel.objects.filter(id=course_id, deleted=False).exists()

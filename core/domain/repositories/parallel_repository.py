@@ -17,7 +17,7 @@ class ParallelRepository(ABC):
     
     
     @abstractmethod
-    def get(self, parallel_id: str) -> Parallel:
+    def get(self, parallel_id: int) -> Parallel:
         """
         Retrieve a parallel record by its ID.
         :param parallel_id: The ID of the parallel record to retrieve.
@@ -48,7 +48,7 @@ class ParallelRepository(ABC):
     
     
     @abstractmethod
-    def delete(self, parallel_id: str) -> None:
+    def delete(self, parallel_id: int) -> None:
         """
         Delete a parallel record by its ID.
         :param parallel_id: The ID of the parallel record to delete.
@@ -56,15 +56,34 @@ class ParallelRepository(ABC):
         pass
     
     @abstractmethod
-    def exist_by_course_id_and_subject_id(self, course_id: str, subject_id: str) -> bool:
+    def exist_by_course_id_and_section_id(self, course_id: int, subject_id: int) -> bool:
         """Check if a course exists by its course ID and subject ID."""
+        pass
+    
+    @abstractmethod
+    def exist_by_course_id_and_section_id_except_id(self, course_id: int, section_id: int, parallel_id: int) -> bool:
+        """
+        Check if a course exists by its course ID and subject ID except for a specific parallel ID.
+        :param course_id: The ID of the course.
+        :param section_id: The ID of the section.
+        :param parallel_id: The ID of the parallel to exclude from the check.
+        :return: True if the course exists, False otherwise.
+        """
+        pass
+    
+    @abstractmethod
+    def exist_by_id(self, parallel_id: int) -> bool:
+        """
+        Check if a parallel record exists by its ID.
+        :param parallel_id: The ID of the parallel record to check.
+        :return: True if the parallel record exists, False otherwise.
+        """
         pass
     
     
     
-    
     @abstractmethod
-    def find_by_id(self, parallel_id: str) -> Parallel:
+    def find_by_id(self, parallel_id: int) -> Parallel:
         """
         Find a parallel record by its ID.
         :param parallel_id: The ID of the parallel record to find.

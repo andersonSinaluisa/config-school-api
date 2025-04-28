@@ -13,10 +13,10 @@ class ParallelORMRepository(ParallelRepository):
         return [Parallel(
             id=parallel.id,
             name=parallel.name,
-            course_id=parallel.course_id,
+            course_id=parallel.course.id,
             capacity=parallel.capacity,
-            section_id=parallel.section_id,
-            school_year_id=parallel.school_year_id
+            section_id=parallel.section.id,
+            school_year_id=parallel.schoolYear.id
         ) for parallel in parallels]
 
     def get(self, parallel_id):
@@ -24,10 +24,10 @@ class ParallelORMRepository(ParallelRepository):
         return Parallel(
             id=parallel.id,
             name=parallel.name,
-            course_id=parallel.course_id,
+            course_id=parallel.course.id,
             capacity=parallel.capacity,
-            section_id=parallel.section_id,
-            school_year_id=parallel.school_year_id
+            section_id=parallel.section.id,
+            school_year_id=parallel.schoolYear.id
         )
 
     def create(self, parallel):
@@ -37,15 +37,15 @@ class ParallelORMRepository(ParallelRepository):
             course_id=parallel.course_id,
             capacity=parallel.capacity,
             section_id=parallel.section_id,
-            school_year_id=parallel.school_year_id
+            schoolYear_id=parallel.school_year_id
         )
         return Parallel(
             id=parallel_model.id,
             name=parallel_model.name,
-            course_id=parallel_model.course_id,
+            course_id=parallel_model.course.id,
             capacity=parallel_model.capacity,
-            section_id=parallel_model.section_id,
-            school_year_id=parallel_model.school_year_id
+            section_id=parallel_model.section.id,
+            school_year_id=parallel_model.schoolYear.id
         )
 
     def update(self, parallel):
@@ -55,15 +55,15 @@ class ParallelORMRepository(ParallelRepository):
         parallel_model.course_id = parallel.course_id
         parallel_model.capacity = parallel.capacity
         parallel_model.section_id = parallel.section_id
-        parallel_model.school_year_id = parallel.school_year_id
+        parallel_model.schoolYear_id = parallel.school_year_id
         parallel_model.save()
         return Parallel(
             id=parallel_model.id,
             name=parallel_model.name,
-            course_id=parallel_model.course_id,
+            course_id=parallel_model.course.id,
             capacity=parallel_model.capacity,
-            section_id=parallel_model.section_id,
-            school_year_id=parallel_model.school_year_id
+            section_id=parallel_model.section.id,
+            school_year_id=parallel_model.schoolYear.id
         )
         
 
@@ -80,15 +80,28 @@ class ParallelORMRepository(ParallelRepository):
         return Parallel(
             id=parallel.id,
             name=parallel.name,
-            course_id=parallel.course_id,
+            course_id=parallel.course.id,
             capacity=parallel.capacity,
-            section_id=parallel.section_id,
-            school_year_id=parallel.school_year_id
+            section_id=parallel.section.id,
+            school_year_id=parallel.schoolYear.id
         )
 
     def exists_by_name(self, name):
         """Check if a parallel exists by its name."""
         return ParallelModel.objects.filter(name=name, deleted=False).exists()
 
+    def exist_by_course_id_and_section_id(self, course_id, section_id):
+        """Check if a parallel exists by its course ID and section ID."""
+        return ParallelModel.objects.filter(course_id=course_id, 
+                                            section_id=section_id, 
+                                            deleted=False).exists()
     
+    def exist_by_id(self, parallel_id):
+        """Check if a parallel exists by its ID."""
+        return ParallelModel.objects.filter(id=parallel_id, deleted=False).exists()
     
+    def exist_by_course_id_and_section_id_except_id(self, course_id, section_id, parallel_id):
+        """Check if a parallel exists by its course ID and section ID except for a specific parallel ID."""
+        return ParallelModel.objects.filter(course_id=course_id, 
+                                            section_id=section_id, 
+                                            deleted=False).exclude(id=parallel_id).exists()

@@ -7,7 +7,17 @@ from django.utils import timezone
 
 class SectionOrmRepository(SectionRepository):
     def all(self):
-        raise NotImplementedError
+        sections = SectionModel.objects.filter(deleted=False)
+
+        return [
+            Section(
+                id=section.id,
+                name=section.name,
+                type=section.type,
+                description=section.description,
+            )
+            for section in sections
+        ]
 
     def get(self, section_id):
         section = SectionModel.objects.get(id=section_id, deleted=False)

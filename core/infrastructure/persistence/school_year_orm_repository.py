@@ -8,23 +8,34 @@ from django.utils import timezone
 
 class SchoolYearOrmRepository(SchoolYearRepository):
     def all(self):
-        raise NotImplementedError
+        school_years = SchoolYearModel.objects.filter(deleted=False)
+
+        return [
+            SchoolYear(
+                id=school_year.id,
+                name=school_year.name,
+                startDate=school_year.startDate,
+                endDate=school_year.endDate,
+                status=school_year.status,
+            )
+            for school_year in school_years
+        ]
 
     def get(self, school_year_id):
-        school_year_ = SchoolYearModel.objects.get(school_year_id,deleted=False)
+        school_year_ = SchoolYearModel.objects.get(id=school_year_id,deleted=False)
 
         return SchoolYear(
             id=school_year_.id,
             name=school_year_.name,
-            startDate=school_year_.start_date,
-            endDate=school_year_.end_date,
+            startDate=school_year_.startDate,
+            endDate=school_year_.endDate,
             status=school_year_.status,
         )
     def create(self, school_year):
         school_year_ = SchoolYearModel.objects.create(
             name=school_year.name,
-            start_date=school_year.startDate,
-            end_date=school_year.endDate,
+            startDate=school_year.startDate,
+            endDate=school_year.endDate,
             status=school_year.status,
         )
 

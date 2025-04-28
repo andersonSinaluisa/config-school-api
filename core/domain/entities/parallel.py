@@ -17,8 +17,14 @@ class Parallel:
     
     
     def __post_init__(self):
-        self.name = self.name.strip()
-        self.course_id = int(self.course_id)
-        self.capacity = int(self.capacity)
-        self.section_id = int(self.section_id)
-        self.school_year_id = int(self.school_year_id)
+        
+        if not self.name:
+            raise ValueError("Name cannot be empty")
+        if not isinstance(self.capacity, int) or self.capacity < 0:
+            raise ValueError("Capacity must be a non-negative integer")
+        if not isinstance(self.section_id, int) or self.section_id < 0:
+            raise ValueError("Section ID must be a non-negative integer")
+        if not isinstance(self.course_id, int) or self.course_id < 0:
+            raise ValueError("Course ID must be a non-negative integer")
+        if not isinstance(self.school_year_id, int) or self.school_year_id < 0:
+            raise ValueError("School Year ID must be a non-negative integer")

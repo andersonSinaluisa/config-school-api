@@ -15,6 +15,21 @@ from core.application.services.levels.delete_level_service import DeleteLevelSer
 from core.application.services.levels.get_level_service import GetLevelService
 from core.application.services.levels.list_level_service import ListLevelService
 from core.application.services.levels.update_level_service import UpdateLevelService
+from core.application.services.parallel.create_parallel_service import CreateParallelService
+from core.application.services.parallel.delete_parallel_service import DeleteParallelService
+from core.application.services.parallel.get_parallel_service import GetParallelService
+from core.application.services.parallel.list_parallel_service import ListParallelService
+from core.application.services.parallel.update_parallel_service import UpdateParallelService
+from core.application.services.school_year.create_school_year_service import CreateSchoolYearService
+from core.application.services.school_year.delete_school_year_service import DeleteSchoolYearService
+from core.application.services.school_year.get_school_year_service import GetSchoolYearService
+from core.application.services.school_year.list_school_year_service import ListSchoolYearService
+from core.application.services.school_year.update_school_year_service import UpdateSchoolYearService
+from core.application.services.sections.create_section_service import CreateSectionService
+from core.application.services.sections.delete_section_service import DeleteSectionService
+from core.application.services.sections.get_section_service import GetSectionService
+from core.application.services.sections.list_section_service import ListSectionService
+from core.application.services.sections.update_section_service import UpdateSectionService
 from core.application.services.subjects.create_subject_service import CreateSubjectService
 from core.application.services.subjects.delete_subject_service import DeleteSubjectService
 from core.application.services.subjects.get_subject_service import GetSubjectService
@@ -23,6 +38,9 @@ from core.application.services.subjects.update_subject_service import UpdateSubj
 from core.infrastructure.persistence.course_orm_adapter import CourseORMAdapter
 from core.infrastructure.persistence.course_subject_orm_repository import CourseSubjectOrmRepository
 from core.infrastructure.persistence.level_orm_repository import LevelOrmRepository
+from core.infrastructure.persistence.parallel_orm_repository import ParallelORMRepository
+from core.infrastructure.persistence.school_year_orm_repository import SchoolYearOrmRepository
+from core.infrastructure.persistence.section_orm_repository import SectionOrmRepository
 from core.infrastructure.persistence.subject_orm_repository import SubjectOrmRepository
 
 
@@ -31,6 +49,9 @@ class Container(containers.DeclarativeContainer):
     level_repository = providers.Singleton(LevelOrmRepository)
     subject_repository = providers.Singleton(SubjectOrmRepository)
     course_subject_repository = providers.Singleton(CourseSubjectOrmRepository)
+    list_parallel_respository = providers.Singleton(ParallelORMRepository)
+    school_year_repository = providers.Singleton(SchoolYearOrmRepository)
+    section_repository = providers.Singleton(SectionOrmRepository)
     '''
     ==========
     Course Services
@@ -146,5 +167,105 @@ class Container(containers.DeclarativeContainer):
     delete_course_subject_service = providers.Factory(
         DeleteCourseSubjectService,
         course_subject_repository=course_subject_repository,
+    )
+    
+    
+    '''
+    ==========
+    Parallel Services
+    ==========
+    '''
+    list_parallel_service = providers.Factory(
+        ListParallelService,
+        parallel_repository=list_parallel_respository,
+    )
+    
+    create_parallel_service = providers.Factory(
+        CreateParallelService,
+        parallel_repository=list_parallel_respository,
+        course_repository=course_repository,
+        section_repository=section_repository,
+    )
+    
+    update_parallel_service = providers.Factory(
+        UpdateParallelService,
+        parallel_repository=list_parallel_respository,
+        course_repository=course_repository,
+        section_repository=section_repository,
+    )
+    
+    
+    delete_parallel_service = providers.Factory(
+        DeleteParallelService,
+        parallel_repository=list_parallel_respository,
+    )
+    
+    get_parallel_service = providers.Factory(
+        GetParallelService,
+        parallel_repository=list_parallel_respository,
+    )
+    
+    
+    '''
+    ==========
+    School Year Services
+    ==========
+    '''
+    
+    create_school_year_service = providers.Factory(
+        CreateSchoolYearService,
+        school_year_repository=school_year_repository,
+    )
+    
+    list_school_year_service = providers.Factory(
+        ListSchoolYearService,
+        school_year_repository=school_year_repository,
+    )
+    
+    get_school_year_service = providers.Factory(
+        GetSchoolYearService,
+        school_year_repository=school_year_repository,
+    )
+    update_school_year_service = providers.Factory(
+        UpdateSchoolYearService,
+        school_year_repository=school_year_repository,
+    )
+    
+    
+    delete_school_year_service = providers.Factory(
+        DeleteSchoolYearService,
+        school_year_repository=school_year_repository,
+    )
+    
+    '''
+    ==========
+    Section Services
+    ==========
+    '''
+    
+    list_section_service = providers.Factory(
+        ListSectionService,
+        section_repository=section_repository,
+    )
+    
+    
+    create_section_service = providers.Factory(
+        CreateSectionService,
+        section_repository=section_repository,
+    )
+    
+    update_section_service = providers.Factory(
+        UpdateSectionService,
+        section_repository=section_repository,
+    )
+    
+    delete_section_service = providers.Factory(
+        DeleteSectionService,
+        section_repository=section_repository,
+    )
+    
+    get_section_service = providers.Factory(
+        GetSectionService,
+        section_repository=section_repository,
     )
     
