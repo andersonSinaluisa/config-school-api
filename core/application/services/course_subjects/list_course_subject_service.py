@@ -7,3 +7,4 @@ class ListCourseSubjectService:
 
     def execute(self):
         return self.course_subject_repository.all()
+

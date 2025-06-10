@@ -62,7 +62,8 @@ class SchoolYearViewSet(ViewSet):
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
         school_year = self.update_school_year_service.execute(pk, **serializer.validated_data)
-        return Response(school_year.to_dict(), status=status.HTTP_200_OK)
+        serializer = self.serializer_class(school_year)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     
     
     def destroy(self, request, pk=None):

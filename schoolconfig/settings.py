@@ -37,12 +37,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "corsheaders",
     "rest_framework",
     "core"
 ]
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -50,6 +52,8 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+CORS_ALLOW_ALL_ORIGINS=True
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = "schoolconfig.urls"
 REST_FRAMEWORK = {
@@ -81,17 +85,16 @@ WSGI_APPLICATION = "schoolconfig.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-print("DB_NAME:", os.getenv("DB_NAME"))
-print("DB_PASSWORD:", os.getenv("DB_PASSWORD"))
+
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": os.getenv("DB_NAME"),
-        "USER": os.getenv("DB_USER"),   
-        "PASSWORD": os.getenv("DB_PASSWORD"),
-        "PORT" : os.getenv("DB_PORT"),
-        "HOST": os.getenv("DB_HOST")
+        "NAME": os.getenv("DB_NAME", "school_admin_db"),
+        "USER": os.getenv("DB_USER", "postgres"),
+        "PASSWORD": os.getenv("DB_PASSWORD","root"),
+        "PORT": os.getenv("DB_PORT", "5432"),
+        "HOST": os.getenv("DB_HOST", "localhost"),
         
     }
 }

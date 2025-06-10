@@ -112,3 +112,20 @@ class ParallelORMRepository(ParallelRepository):
         return ParallelModel.objects.filter(course_id=course_id, 
                                             section_id=section_id, 
                                             deleted=False).exclude(id=parallel_id).exists()
+        
+    def find_by_course_id(self, course_id):
+        """Find all parallels by course ID."""
+        parallels = ParallelModel.objects.filter(course_id=course_id, deleted=False).order_by('id')
+        
+        return [Parallel(
+            id=parallel.id,
+            name=parallel.name,
+            course_id=parallel.course.id,
+            capacity=parallel.capacity,
+            section_id=parallel.section.id,
+            school_year_id=parallel.schoolYear.id,
+            course=parallel.course,
+            section=parallel.section,
+            school_year=parallel.schoolYear
+        ) for parallel in parallels]
+        

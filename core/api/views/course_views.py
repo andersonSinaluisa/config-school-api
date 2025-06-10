@@ -49,6 +49,7 @@ class CourseViewSet(ViewSet):
         List all courses.
         '''
         courses = self.list_course_service.execute()
+       
         paginator = StandardResultsSetPagination(request, courses)
         paginated_data = paginator.paginate_queryset()
 

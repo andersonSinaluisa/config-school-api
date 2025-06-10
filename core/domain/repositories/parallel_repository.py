@@ -101,4 +101,13 @@ class ParallelRepository(ABC):
         """
         pass
     
+    @abstractmethod
+    def find_by_course_id(self, course_id: int) -> List[Parallel]:
+        """
+        Retrieve all parallels associated with a specific course.
+        :param course_id: The ID of the course for which to retrieve parallels.
+        :return: A list of parallels associated with the specified course.
+        """
+        pass
+    
     

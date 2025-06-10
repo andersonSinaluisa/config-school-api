@@ -1,6 +1,3 @@
-
-
-
 from core.domain.entities.couse_subject import CourseSubject
 from core.domain.repositories.course_subject_repository import CourseSubjectRepository
 from rest_framework.exceptions import ValidationError, NotFound

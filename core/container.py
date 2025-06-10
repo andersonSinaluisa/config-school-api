@@ -1,9 +1,12 @@
 # containers.py
 from dependency_injector import containers, providers
+from core.application.services.parallel.list_parallel_by_course_service import ListParallelByCourseService
 from core.application.services.course_subjects.create_course_subject_service import CreateCourseSubjectService
+from core.application.services.course_subjects.create_range_course_subject_service import CreateRangeCourseSubjectService
 from core.application.services.course_subjects.delete_course_subject_service import DeleteCourseSubjectService
 from core.application.services.course_subjects.get_course_subject_service import GetCourseSubjectService
 from core.application.services.course_subjects.list_course_subject_service import ListCourseSubjectService
+from core.application.services.course_subjects.remove_from_course_service import RemoveFromCourseService
 from core.application.services.course_subjects.update_course_subject_service import UpdateCourseSubjectService
 from core.application.services.courses.create_course_service import CreateCourseService
 from core.application.services.courses.delete_course_service import DeleteCourseService
@@ -42,8 +45,8 @@ from core.infrastructure.persistence.parallel_orm_repository import ParallelORMR
 from core.infrastructure.persistence.school_year_orm_repository import SchoolYearOrmRepository
 from core.infrastructure.persistence.section_orm_repository import SectionOrmRepository
 from core.infrastructure.persistence.subject_orm_repository import SubjectOrmRepository
-
-
+from core.application.services.course_subjects.list_from_couse_service import ListFromCourseService
+from core.application.services.course_subjects.remove_range_from_course import RemoveRangeFromCourse
 class Container(containers.DeclarativeContainer):
     course_repository = providers.Singleton(CourseORMAdapter)
     level_repository = providers.Singleton(LevelOrmRepository)
@@ -169,7 +172,27 @@ class Container(containers.DeclarativeContainer):
         course_subject_repository=course_subject_repository,
     )
     
+    list_subjects_from_course = providers.Factory(
+        ListFromCourseService,
+        course_subject_repository=course_subject_repository,
+    )
     
+    # CreateRangeCourseSubjectService
+    create_range_course_subject_service = providers.Factory(
+        CreateRangeCourseSubjectService,
+        course_subject_repository=course_subject_repository,
+    )
+    
+    # RemoveFromCourseService
+    remove_from_course_service = providers.Factory(
+        RemoveFromCourseService,
+        course_subject_repository=course_subject_repository,
+    )
+    
+    remove_range_from_course_service = providers.Factory(
+        RemoveRangeFromCourse,
+        course_subject_repository=course_subject_repository,
+    )
     '''
     ==========
     Parallel Services
@@ -179,7 +202,10 @@ class Container(containers.DeclarativeContainer):
         ListParallelService,
         parallel_repository=list_parallel_respository,
     )
-    
+    list_parallel_by_course_service = providers.Factory(
+        ListParallelByCourseService,
+        parallel_repository=list_parallel_respository,
+    )
     create_parallel_service = providers.Factory(
         CreateParallelService,
         parallel_repository=list_parallel_respository,

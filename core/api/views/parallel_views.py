@@ -21,11 +21,25 @@ class ParallelViewSet(ViewSet):
         self.delete_parallel = Container.delete_parallel_service()
         self.get_parallel = Container.get_parallel_service()
         self.get_all_parallels = Container.list_parallel_service()
+        self.get_all_parallels_by_course = Container.list_parallel_by_course_service()
     def list(self, request, *args, **kwargs):
         
         """
         Handle GET requests to list all resources.
         """
+        course_id = request.query_params.get('course_id', None)
+        if course_id:
+            
+            # Implement your logic here
+            parallels = self.get_all_parallels_by_course.execute(course_id)
+            paginator = StandardResultsSetPagination(request, parallels)
+            paginated_data = paginator.paginate_queryset()
+
+            serializer = self.serializer_class(paginated_data, many=True)
+
+            return paginator.get_paginated_response(serializer.data)
+        
+        
         # Implement your logic here
         parallels = self.get_all_parallels.execute()
         paginator = StandardResultsSetPagination(request, parallels)

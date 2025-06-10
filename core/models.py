@@ -46,7 +46,7 @@ class CourseSubjectModel(BaseModel):
     id = models.AutoField(primary_key=True)
     course = models.ForeignKey(CourseModel, on_delete=models.CASCADE, related_name='course_subjects')
     subject = models.ForeignKey('SubjectModel', on_delete=models.CASCADE, related_name='course_subjects')
-    hoursPerWeek = models.IntegerField()
+    hoursPerWeek = models.TimeField(default='00:00:00')
     isRequired = models.BooleanField(default=False)
 
     def __str__(self):
@@ -88,7 +88,7 @@ class SchoolYearModel(BaseModel):
     name = models.CharField(max_length=255, unique=True)
     startDate = models.DateField()
     endDate = models.DateField()
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='planning')
+    status = models.CharField(max_length=255, choices=STATUS_CHOICES, default='planning')
 
     def __str__(self):
         return self.name.__str__()
@@ -111,7 +111,13 @@ class SectionModel(BaseModel):
     name = models.CharField(max_length=255, unique=True)
     type = models.CharField(max_length=10, choices=TYPE_CHOICES, default='morning')
     description = models.TextField(blank=True, null=True)
-
+    startDate = models.TimeField(default='08:00:00')
+    endDate = models.TimeField(default='17:00:00')
+    hasBreak = models.BooleanField(default=False)
+    breakCount = models.IntegerField(default=0)
+    breakDuration = models.IntegerField(default=0)
+    days = models.CharField(max_length=255, blank=True, null=True)  # Comma-separated list of days
+    
     def __str__(self):
         return self.name.__str__()
 
@@ -151,3 +157,18 @@ class LogActivityModel(BaseModel):
         db_table = 'log_activity'
         verbose_name = 'Log Activity'
         ordering = ['-timestamp']
+
+
+class ConfigurationModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    key = models.CharField(max_length=255, unique=True)
+    value = models.TextField()
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.key} - {self.value}"
+
+    class Meta:
+        db_table = 'configuration'
+        verbose_name = 'Configuration'
+        ordering = ['key']
