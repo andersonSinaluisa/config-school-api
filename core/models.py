@@ -172,3 +172,101 @@ class ConfigurationModel(BaseModel):
         db_table = 'configuration'
         verbose_name = 'Configuration'
         ordering = ['key']
+
+
+class GradingSystemModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)
+    numberOfTerms = models.IntegerField()
+    passingScore = models.DecimalField(max_digits=5, decimal_places=2, default=7.00)
+
+    def __str__(self):
+        return self.name.__str__()
+
+    class Meta:
+        db_table = 'grading_system'
+        verbose_name = 'Grading System'
+        verbose_name_plural = 'Grading Systems'
+        ordering = ['name']
+
+
+class GradingTermModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    gradingSystem = models.ForeignKey(GradingSystemModel, on_delete=models.CASCADE, related_name='terms')
+    academicYear = models.ForeignKey('SchoolYearModel', on_delete=models.CASCADE, related_name='grading_terms')
+    name = models.CharField(max_length=255)
+    order = models.IntegerField()
+    weight = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return f"{self.gradingSystem.name} - {self.name}"
+
+    class Meta:
+        db_table = 'grading_term'
+        verbose_name = 'Grading Term'
+        verbose_name_plural = 'Grading Terms'
+        ordering = ['order']
+
+
+class EvaluationTypeModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)
+    weight = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return self.name.__str__()
+
+    class Meta:
+        db_table = 'evaluation_type'
+        verbose_name = 'Evaluation Type'
+        verbose_name_plural = 'Evaluation Types'
+        ordering = ['name']
+
+
+class MeetingTypeModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, unique=True)
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.name.__str__()
+
+    class Meta:
+        db_table = 'meeting_type'
+        verbose_name = 'Meeting Type'
+        verbose_name_plural = 'Meeting Types'
+        ordering = ['name']
+
+
+class AttendanceCodeModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    code = models.CharField(max_length=10, unique=True)
+    description = models.CharField(max_length=255)
+    affectsGrade = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.code} - {self.description}"
+
+    class Meta:
+        db_table = 'attendance_code'
+        verbose_name = 'Attendance Code'
+        verbose_name_plural = 'Attendance Codes'
+        ordering = ['code']
+
+
+class BehaviorScaleModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    name = models.CharField(max_length=255, unique=True)
+    minScore = models.DecimalField(max_digits=5, decimal_places=2)
+    maxScore = models.DecimalField(max_digits=5, decimal_places=2)
+
+    def __str__(self):
+        return self.name.__str__()
+
+    class Meta:
+        db_table = 'behavior_scale'
+        verbose_name = 'Behavior Scale'
+        verbose_name_plural = 'Behavior Scales'
+        ordering = ['name']
