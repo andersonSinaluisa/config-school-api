@@ -7,6 +7,12 @@ from core.api.views.course_subject_view import CourseSubjectAPIView, CourseSubje
 from core.api.views.parallel_views import ParallelViewSet
 from core.api.views.school_year_views import SchoolYearViewSet
 from core.api.views.section_view import SectionViewSet
+from core.api.views.grading_system_views import GradingSystemViewSet
+from core.api.views.grading_term_views import GradingTermViewSet
+from core.api.views.evaluation_type_views import EvaluationTypeViewSet
+from core.api.views.meeting_type_views import MeetingTypeViewSet
+from core.api.views.attendance_code_views import AttendanceCodeViewSet
+from core.api.views.behavior_scale_views import BehaviorScaleViewSet
 from django.urls import path
 
 router = DefaultRouter()
@@ -17,11 +23,17 @@ router.register(r'course-subjects', CourseSubjectViewSet, basename='course-subje
 router.register(r'parallels', ParallelViewSet, basename='parallels')
 router.register(r'school-years', SchoolYearViewSet, basename='school-years')
 router.register(r'sections', SectionViewSet, basename='sections')
+router.register(r'grading-systems', GradingSystemViewSet, basename='grading-systems')
+router.register(r'grading-terms', GradingTermViewSet, basename='grading-terms')
+router.register(r'evaluation-types', EvaluationTypeViewSet, basename='evaluation-types')
+router.register(r'meeting-types', MeetingTypeViewSet, basename='meeting-types')
+router.register(r'attendance-codes', AttendanceCodeViewSet, basename='attendance-codes')
+router.register(r'behavior-scales', BehaviorScaleViewSet, basename='behavior-scales')
 
 
 
 urlpatterns = [
-    
+
     path('course-subjects/assing/<int:course_id>/', CourseSubjectAPIView.as_view(), name='course-subjects-assign'),
 ]
 urlpatterns += router.urls

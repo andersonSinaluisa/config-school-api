@@ -38,6 +38,36 @@ from core.application.services.subjects.delete_subject_service import DeleteSubj
 from core.application.services.subjects.get_subject_service import GetSubjectService
 from core.application.services.subjects.list_subject_service import ListSubjectService
 from core.application.services.subjects.update_subject_service import UpdateSubjectService
+from core.application.services.grading_systems.create_grading_system_service import CreateGradingSystemService
+from core.application.services.grading_systems.delete_grading_system_service import DeleteGradingSystemService
+from core.application.services.grading_systems.get_grading_system_service import GetGradingSystemService
+from core.application.services.grading_systems.list_grading_system_service import ListGradingSystemService
+from core.application.services.grading_systems.update_grading_system_service import UpdateGradingSystemService
+from core.application.services.grading_terms.create_grading_term_service import CreateGradingTermService
+from core.application.services.grading_terms.delete_grading_term_service import DeleteGradingTermService
+from core.application.services.grading_terms.get_grading_term_service import GetGradingTermService
+from core.application.services.grading_terms.list_grading_term_service import ListGradingTermService
+from core.application.services.grading_terms.update_grading_term_service import UpdateGradingTermService
+from core.application.services.evaluation_types.create_evaluation_type_service import CreateEvaluationTypeService
+from core.application.services.evaluation_types.delete_evaluation_type_service import DeleteEvaluationTypeService
+from core.application.services.evaluation_types.get_evaluation_type_service import GetEvaluationTypeService
+from core.application.services.evaluation_types.list_evaluation_type_service import ListEvaluationTypeService
+from core.application.services.evaluation_types.update_evaluation_type_service import UpdateEvaluationTypeService
+from core.application.services.meeting_types.create_meeting_type_service import CreateMeetingTypeService
+from core.application.services.meeting_types.delete_meeting_type_service import DeleteMeetingTypeService
+from core.application.services.meeting_types.get_meeting_type_service import GetMeetingTypeService
+from core.application.services.meeting_types.list_meeting_type_service import ListMeetingTypeService
+from core.application.services.meeting_types.update_meeting_type_service import UpdateMeetingTypeService
+from core.application.services.attendance_codes.create_attendance_code_service import CreateAttendanceCodeService
+from core.application.services.attendance_codes.delete_attendance_code_service import DeleteAttendanceCodeService
+from core.application.services.attendance_codes.get_attendance_code_service import GetAttendanceCodeService
+from core.application.services.attendance_codes.list_attendance_code_service import ListAttendanceCodeService
+from core.application.services.attendance_codes.update_attendance_code_service import UpdateAttendanceCodeService
+from core.application.services.behavior_scales.create_behavior_scale_service import CreateBehaviorScaleService
+from core.application.services.behavior_scales.delete_behavior_scale_service import DeleteBehaviorScaleService
+from core.application.services.behavior_scales.get_behavior_scale_service import GetBehaviorScaleService
+from core.application.services.behavior_scales.list_behavior_scale_service import ListBehaviorScaleService
+from core.application.services.behavior_scales.update_behavior_scale_service import UpdateBehaviorScaleService
 from core.infrastructure.persistence.course_orm_adapter import CourseORMAdapter
 from core.infrastructure.persistence.course_subject_orm_repository import CourseSubjectOrmRepository
 from core.infrastructure.persistence.level_orm_repository import LevelOrmRepository
@@ -45,6 +75,12 @@ from core.infrastructure.persistence.parallel_orm_repository import ParallelORMR
 from core.infrastructure.persistence.school_year_orm_repository import SchoolYearOrmRepository
 from core.infrastructure.persistence.section_orm_repository import SectionOrmRepository
 from core.infrastructure.persistence.subject_orm_repository import SubjectOrmRepository
+from core.infrastructure.persistence.grading_system_orm_repository import GradingSystemOrmRepository
+from core.infrastructure.persistence.grading_term_orm_repository import GradingTermOrmRepository
+from core.infrastructure.persistence.evaluation_type_orm_repository import EvaluationTypeOrmRepository
+from core.infrastructure.persistence.meeting_type_orm_repository import MeetingTypeOrmRepository
+from core.infrastructure.persistence.attendance_code_orm_repository import AttendanceCodeOrmRepository
+from core.infrastructure.persistence.behavior_scale_orm_repository import BehaviorScaleOrmRepository
 from core.application.services.course_subjects.list_from_couse_service import ListFromCourseService
 from core.application.services.course_subjects.remove_range_from_course import RemoveRangeFromCourse
 class Container(containers.DeclarativeContainer):
@@ -55,6 +91,12 @@ class Container(containers.DeclarativeContainer):
     list_parallel_respository = providers.Singleton(ParallelORMRepository)
     school_year_repository = providers.Singleton(SchoolYearOrmRepository)
     section_repository = providers.Singleton(SectionOrmRepository)
+    grading_system_repository = providers.Singleton(GradingSystemOrmRepository)
+    grading_term_repository = providers.Singleton(GradingTermOrmRepository)
+    evaluation_type_repository = providers.Singleton(EvaluationTypeOrmRepository)
+    meeting_type_repository = providers.Singleton(MeetingTypeOrmRepository)
+    attendance_code_repository = providers.Singleton(AttendanceCodeOrmRepository)
+    behavior_scale_repository = providers.Singleton(BehaviorScaleOrmRepository)
     '''
     ==========
     Course Services
@@ -296,5 +338,191 @@ class Container(containers.DeclarativeContainer):
     get_section_service = providers.Factory(
         GetSectionService,
         section_repository=section_repository,
+    )
+
+    '''
+    ==========
+    Grading System Services
+    ==========
+    '''
+
+    create_grading_system_service = providers.Factory(
+        CreateGradingSystemService,
+        grading_system_repository=grading_system_repository,
+    )
+
+    list_grading_system_service = providers.Factory(
+        ListGradingSystemService,
+        grading_system_repository=grading_system_repository,
+    )
+
+    get_grading_system_service = providers.Factory(
+        GetGradingSystemService,
+        grading_system_repository=grading_system_repository,
+    )
+
+    update_grading_system_service = providers.Factory(
+        UpdateGradingSystemService,
+        grading_system_repository=grading_system_repository,
+    )
+
+    delete_grading_system_service = providers.Factory(
+        DeleteGradingSystemService,
+        grading_system_repository=grading_system_repository,
+    )
+
+    '''
+    ==========
+    Grading Term Services
+    ==========
+    '''
+
+    create_grading_term_service = providers.Factory(
+        CreateGradingTermService,
+        grading_term_repository=grading_term_repository,
+    )
+
+    list_grading_term_service = providers.Factory(
+        ListGradingTermService,
+        grading_term_repository=grading_term_repository,
+    )
+
+    get_grading_term_service = providers.Factory(
+        GetGradingTermService,
+        grading_term_repository=grading_term_repository,
+    )
+
+    update_grading_term_service = providers.Factory(
+        UpdateGradingTermService,
+        grading_term_repository=grading_term_repository,
+    )
+
+    delete_grading_term_service = providers.Factory(
+        DeleteGradingTermService,
+        grading_term_repository=grading_term_repository,
+    )
+
+    '''
+    ==========
+    Evaluation Type Services
+    ==========
+    '''
+
+    create_evaluation_type_service = providers.Factory(
+        CreateEvaluationTypeService,
+        evaluation_type_repository=evaluation_type_repository,
+    )
+
+    list_evaluation_type_service = providers.Factory(
+        ListEvaluationTypeService,
+        evaluation_type_repository=evaluation_type_repository,
+    )
+
+    get_evaluation_type_service = providers.Factory(
+        GetEvaluationTypeService,
+        evaluation_type_repository=evaluation_type_repository,
+    )
+
+    update_evaluation_type_service = providers.Factory(
+        UpdateEvaluationTypeService,
+        evaluation_type_repository=evaluation_type_repository,
+    )
+
+    delete_evaluation_type_service = providers.Factory(
+        DeleteEvaluationTypeService,
+        evaluation_type_repository=evaluation_type_repository,
+    )
+
+    '''
+    ==========
+    Meeting Type Services
+    ==========
+    '''
+
+    create_meeting_type_service = providers.Factory(
+        CreateMeetingTypeService,
+        meeting_type_repository=meeting_type_repository,
+    )
+
+    list_meeting_type_service = providers.Factory(
+        ListMeetingTypeService,
+        meeting_type_repository=meeting_type_repository,
+    )
+
+    get_meeting_type_service = providers.Factory(
+        GetMeetingTypeService,
+        meeting_type_repository=meeting_type_repository,
+    )
+
+    update_meeting_type_service = providers.Factory(
+        UpdateMeetingTypeService,
+        meeting_type_repository=meeting_type_repository,
+    )
+
+    delete_meeting_type_service = providers.Factory(
+        DeleteMeetingTypeService,
+        meeting_type_repository=meeting_type_repository,
+    )
+
+    '''
+    ==========
+    Attendance Code Services
+    ==========
+    '''
+
+    create_attendance_code_service = providers.Factory(
+        CreateAttendanceCodeService,
+        attendance_code_repository=attendance_code_repository,
+    )
+
+    list_attendance_code_service = providers.Factory(
+        ListAttendanceCodeService,
+        attendance_code_repository=attendance_code_repository,
+    )
+
+    get_attendance_code_service = providers.Factory(
+        GetAttendanceCodeService,
+        attendance_code_repository=attendance_code_repository,
+    )
+
+    update_attendance_code_service = providers.Factory(
+        UpdateAttendanceCodeService,
+        attendance_code_repository=attendance_code_repository,
+    )
+
+    delete_attendance_code_service = providers.Factory(
+        DeleteAttendanceCodeService,
+        attendance_code_repository=attendance_code_repository,
+    )
+
+    '''
+    ==========
+    Behavior Scale Services
+    ==========
+    '''
+
+    create_behavior_scale_service = providers.Factory(
+        CreateBehaviorScaleService,
+        behavior_scale_repository=behavior_scale_repository,
+    )
+
+    list_behavior_scale_service = providers.Factory(
+        ListBehaviorScaleService,
+        behavior_scale_repository=behavior_scale_repository,
+    )
+
+    get_behavior_scale_service = providers.Factory(
+        GetBehaviorScaleService,
+        behavior_scale_repository=behavior_scale_repository,
+    )
+
+    update_behavior_scale_service = providers.Factory(
+        UpdateBehaviorScaleService,
+        behavior_scale_repository=behavior_scale_repository,
+    )
+
+    delete_behavior_scale_service = providers.Factory(
+        DeleteBehaviorScaleService,
+        behavior_scale_repository=behavior_scale_repository,
     )
     
