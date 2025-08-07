@@ -68,6 +68,16 @@ from core.application.services.behavior_scales.delete_behavior_scale_service imp
 from core.application.services.behavior_scales.get_behavior_scale_service import GetBehaviorScaleService
 from core.application.services.behavior_scales.list_behavior_scale_service import ListBehaviorScaleService
 from core.application.services.behavior_scales.update_behavior_scale_service import UpdateBehaviorScaleService
+from core.application.services.class_schedules.create_class_schedule_service import CreateClassScheduleService
+from core.application.services.class_schedules.list_class_schedule_service import ListClassScheduleService
+from core.application.services.class_schedules.get_class_schedule_service import GetClassScheduleService
+from core.application.services.class_schedules.update_class_schedule_service import UpdateClassScheduleService
+from core.application.services.class_schedules.delete_class_schedule_service import DeleteClassScheduleService
+from core.application.services.academic_plannings.create_academic_planning_service import CreateAcademicPlanningService
+from core.application.services.academic_plannings.list_academic_planning_service import ListAcademicPlanningService
+from core.application.services.academic_plannings.get_academic_planning_service import GetAcademicPlanningService
+from core.application.services.academic_plannings.update_academic_planning_service import UpdateAcademicPlanningService
+from core.application.services.academic_plannings.delete_academic_planning_service import DeleteAcademicPlanningService
 from core.infrastructure.persistence.course_orm_adapter import CourseORMAdapter
 from core.infrastructure.persistence.course_subject_orm_repository import CourseSubjectOrmRepository
 from core.infrastructure.persistence.level_orm_repository import LevelOrmRepository
@@ -81,6 +91,8 @@ from core.infrastructure.persistence.evaluation_type_orm_repository import Evalu
 from core.infrastructure.persistence.meeting_type_orm_repository import MeetingTypeOrmRepository
 from core.infrastructure.persistence.attendance_code_orm_repository import AttendanceCodeOrmRepository
 from core.infrastructure.persistence.behavior_scale_orm_repository import BehaviorScaleOrmRepository
+from core.infrastructure.persistence.class_schedule_orm_repository import ClassScheduleOrmRepository
+from core.infrastructure.persistence.academic_planning_orm_repository import AcademicPlanningOrmRepository
 from core.application.services.course_subjects.list_from_couse_service import ListFromCourseService
 from core.application.services.course_subjects.remove_range_from_course import RemoveRangeFromCourse
 class Container(containers.DeclarativeContainer):
@@ -97,6 +109,8 @@ class Container(containers.DeclarativeContainer):
     meeting_type_repository = providers.Singleton(MeetingTypeOrmRepository)
     attendance_code_repository = providers.Singleton(AttendanceCodeOrmRepository)
     behavior_scale_repository = providers.Singleton(BehaviorScaleOrmRepository)
+    class_schedule_repository = providers.Singleton(ClassScheduleOrmRepository)
+    academic_planning_repository = providers.Singleton(AcademicPlanningOrmRepository)
     '''
     ==========
     Course Services
@@ -524,5 +538,83 @@ class Container(containers.DeclarativeContainer):
     delete_behavior_scale_service = providers.Factory(
         DeleteBehaviorScaleService,
         behavior_scale_repository=behavior_scale_repository,
+    )
+
+    '''
+    ==========
+    Class Schedule Services
+    ==========
+    '''
+
+    create_class_schedule_service = providers.Factory(
+        CreateClassScheduleService,
+        class_schedule_repository=class_schedule_repository,
+        course_repository=course_repository,
+        parallel_repository=list_parallel_respository,
+        school_year_repository=school_year_repository,
+        subject_repository=subject_repository,
+    )
+
+    list_class_schedule_service = providers.Factory(
+        ListClassScheduleService,
+        class_schedule_repository=class_schedule_repository,
+    )
+
+    get_class_schedule_service = providers.Factory(
+        GetClassScheduleService,
+        class_schedule_repository=class_schedule_repository,
+    )
+
+    update_class_schedule_service = providers.Factory(
+        UpdateClassScheduleService,
+        class_schedule_repository=class_schedule_repository,
+        course_repository=course_repository,
+        parallel_repository=list_parallel_respository,
+        school_year_repository=school_year_repository,
+        subject_repository=subject_repository,
+    )
+
+    delete_class_schedule_service = providers.Factory(
+        DeleteClassScheduleService,
+        class_schedule_repository=class_schedule_repository,
+    )
+
+    '''
+    ===========
+    Academic Planning Services
+    ===========
+    '''
+
+    create_academic_planning_service = providers.Factory(
+        CreateAcademicPlanningService,
+        academic_planning_repository=academic_planning_repository,
+        course_repository=course_repository,
+        parallel_repository=list_parallel_respository,
+        school_year_repository=school_year_repository,
+        subject_repository=subject_repository,
+    )
+
+    list_academic_planning_service = providers.Factory(
+        ListAcademicPlanningService,
+        academic_planning_repository=academic_planning_repository,
+    )
+
+    get_academic_planning_service = providers.Factory(
+        GetAcademicPlanningService,
+        academic_planning_repository=academic_planning_repository,
+    )
+
+    update_academic_planning_service = providers.Factory(
+        UpdateAcademicPlanningService,
+        academic_planning_repository=academic_planning_repository,
+        course_repository=course_repository,
+        parallel_repository=list_parallel_respository,
+        school_year_repository=school_year_repository,
+        subject_repository=subject_repository,
+    )
+
+    delete_academic_planning_service = providers.Factory(
+        DeleteAcademicPlanningService,
+        academic_planning_repository=academic_planning_repository,
     )
     

@@ -13,6 +13,8 @@ from core.api.views.evaluation_type_views import EvaluationTypeViewSet
 from core.api.views.meeting_type_views import MeetingTypeViewSet
 from core.api.views.attendance_code_views import AttendanceCodeViewSet
 from core.api.views.behavior_scale_views import BehaviorScaleViewSet
+from core.api.views.class_schedule_views import ClassScheduleViewSet
+from core.api.views.academic_planning_views import AcademicPlanningViewSet
 from django.urls import path
 
 router = DefaultRouter()
@@ -29,6 +31,8 @@ router.register(r'evaluation-types', EvaluationTypeViewSet, basename='evaluation
 router.register(r'meeting-types', MeetingTypeViewSet, basename='meeting-types')
 router.register(r'attendance-codes', AttendanceCodeViewSet, basename='attendance-codes')
 router.register(r'behavior-scales', BehaviorScaleViewSet, basename='behavior-scales')
+router.register(r'class-schedules', ClassScheduleViewSet, basename='class-schedules')
+router.register(r'academic-plannings', AcademicPlanningViewSet, basename='academic-plannings')
 
 
 

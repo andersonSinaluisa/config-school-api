@@ -270,3 +270,64 @@ class BehaviorScaleModel(BaseModel):
         verbose_name = 'Behavior Scale'
         verbose_name_plural = 'Behavior Scales'
         ordering = ['name']
+
+
+class ClassScheduleModel(BaseModel):
+    DAY_CHOICES = [
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+        ('friday', 'Friday'),
+        ('saturday', 'Saturday'),
+        ('sunday', 'Sunday'),
+    ]
+
+    id = models.AutoField(primary_key=True)
+    course = models.ForeignKey(CourseModel, on_delete=models.CASCADE, related_name='class_schedules')
+    parallel = models.ForeignKey(ParallelModel, on_delete=models.CASCADE, related_name='class_schedules')
+    schoolYear = models.ForeignKey(SchoolYearModel, on_delete=models.CASCADE, related_name='class_schedules')
+    subject = models.ForeignKey(SubjectModel, on_delete=models.CASCADE, related_name='class_schedules')
+    dayOfWeek = models.CharField(max_length=9, choices=DAY_CHOICES)
+    startTime = models.TimeField()
+    endTime = models.TimeField()
+
+    def __str__(self):
+        return f"{self.parallel.name} - {self.subject.name} ({self.dayOfWeek})"
+
+    class Meta:
+        db_table = 'class_schedule'
+        verbose_name = 'Class Schedule'
+        verbose_name_plural = 'Class Schedules'
+        unique_together = ('parallel', 'dayOfWeek', 'startTime')
+        ordering = ['dayOfWeek', 'startTime']
+
+
+class AcademicPlanningModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    course = models.ForeignKey(
+        CourseModel, on_delete=models.CASCADE, related_name='academic_plannings'
+    )
+    parallel = models.ForeignKey(
+        ParallelModel, on_delete=models.CASCADE, related_name='academic_plannings'
+    )
+    schoolYear = models.ForeignKey(
+        SchoolYearModel, on_delete=models.CASCADE, related_name='academic_plannings'
+    )
+    subject = models.ForeignKey(
+        SubjectModel, on_delete=models.CASCADE, related_name='academic_plannings'
+    )
+    topic = models.CharField(max_length=255)
+    startDate = models.DateField()
+    endDate = models.DateField()
+    description = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.subject.name} - {self.topic}"
+
+    class Meta:
+        db_table = 'academic_planning'
+        verbose_name = 'Academic Planning'
+        verbose_name_plural = 'Academic Plannings'
+        unique_together = ('parallel', 'subject', 'startDate')
+        ordering = ['startDate']
