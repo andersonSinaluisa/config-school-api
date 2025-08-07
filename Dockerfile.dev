@@ -1,0 +1,41 @@
+ARG PYTHON_VERSION=3.12
+
+# Etapa base con Python
+FROM python:${PYTHON_VERSION} AS dev
+
+# Configura el entorno
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+
+# Establece el directorio de trabajo
+WORKDIR /app
+
+# Instala dependencias del sistema (útiles en dev)
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    libpq-dev \
+    curl \
+    && rm -rf /var/lib/apt/lists/*
+
+# Instala pipenv si lo usas (opcional)
+# RUN pip install pipenv
+
+# Copia los requerimientos
+COPY requirements.txt /app/requirements.txt
+
+# Instala las dependencias de Python
+RUN pip install --upgrade pip && pip install -r requirements.txt
+
+# Copia solo el script de arranque primero (por capas)
+
+
+# Copia el resto del código (usa volumen en docker-compose para override en local)
+COPY . /app
+
+# Exponer puerto de desarrollo de Django
+EXPOSE 8000
+
+# Usa el entrypoint para preparar el entorno (migraciones, etc.)
+
+# Usa runserver para hot reload (o manage.py shell/migrate/test si se sobreescribe CMD)
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]

@@ -15,11 +15,11 @@ class SectionOrmRepository(SectionRepository):
                 name=section.name,
                 type=section.type,
                 description=section.description,
-                break_count= section.break_count,
-                break_duration=section.break_duration,
-                start_time=section.start_time,
-                end_time=section.end_time,
-                has_break=section.has_break,
+                break_count= section.breakCount,
+                break_duration=section.breakDuration,
+                start_time=section.startDate,
+                end_time=section.endDate,
+                has_break=section.hasBreak,
                 days=section.days if section.days.split(',') else []
                 
             )

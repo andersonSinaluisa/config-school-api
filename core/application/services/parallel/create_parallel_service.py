@@ -28,9 +28,7 @@ class CreateParallelService:
         :return: The created parallel record.
         """
         # Check if a parallel with the same course ID and subject ID already exists
-        if self.parallel_service.exist_by_course_id_and_section_id(course_id, section_id):
-            raise ValidationError("A parallel with the same course ID and subject ID already exists.",
-                                  code="duplicate_parallel")
+
             
         # Check if the course ID is valid
         if not self.course_repository.exist_by_id(course_id):
