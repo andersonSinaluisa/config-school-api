@@ -12,3 +12,13 @@ class ParallelSerializer(serializers.Serializer):
     school_year_id = serializers.IntegerField()
     course = CourseSerializer(read_only=True)
     section = SectionSerializer(read_only=True)
+    
+class ParallelPartialSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=100, required=False)
+    course_id = serializers.IntegerField(required=False)
+    capacity = serializers.IntegerField(required=False)
+    section_id = serializers.IntegerField(required=False)
+    school_year_id = serializers.IntegerField(required=False)
+    
+ 

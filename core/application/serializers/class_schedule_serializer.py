@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from core.application.serializers.course_serializer import CourseSerializer
-from core.application.serializers.parallel_serializer import ParallelSerializer
+from core.application.serializers.course_serializer import CoursePartialSerializer
+from core.application.serializers.parallel_serializer import ParallelPartialSerializer
 from core.application.serializers.school_year_serializer import SchoolYearSerializer
 from core.application.serializers.subject_serializer import SubjectSerializer
 
@@ -15,8 +15,8 @@ class ClassScheduleSerializer(serializers.Serializer):
     day_of_week = serializers.CharField(max_length=9)
     start_time = serializers.TimeField()
     end_time = serializers.TimeField()
-    course = CourseSerializer(read_only=True)
-    parallel = ParallelSerializer(read_only=True)
+    course = CoursePartialSerializer(read_only=True)
+    parallel = ParallelPartialSerializer(read_only=True)
     school_year = SchoolYearSerializer(read_only=True)
     subject = SubjectSerializer(read_only=True)
 

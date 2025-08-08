@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
-from core.application.serializers.course_serializer import CourseSerializer
-from core.application.serializers.parallel_serializer import ParallelSerializer
+from core.application.serializers.course_serializer import CoursePartialSerializer
+from core.application.serializers.parallel_serializer import ParallelPartialSerializer
 from core.application.serializers.school_year_serializer import SchoolYearSerializer
 from core.application.serializers.subject_serializer import SubjectSerializer
 
@@ -16,7 +16,7 @@ class AcademicPlanningSerializer(serializers.Serializer):
     start_date = serializers.DateField()
     end_date = serializers.DateField()
     description = serializers.CharField(required=False, allow_blank=True, allow_null=True)
-    course = CourseSerializer(read_only=True)
-    parallel = ParallelSerializer(read_only=True)
+    course = CoursePartialSerializer(read_only=True)
+    parallel = ParallelPartialSerializer(read_only=True)
     school_year = SchoolYearSerializer(read_only=True)
     subject = SubjectSerializer(read_only=True)

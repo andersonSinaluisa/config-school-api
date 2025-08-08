@@ -19,3 +19,10 @@ class CourseSerializer(serializers.Serializer):
             raise serializers.ValidationError("Level ID must be a positive integer.")
 
         return data
+
+class CoursePartialSerializer(serializers.Serializer):
+    id = serializers.IntegerField(read_only=True)
+    name = serializers.CharField(max_length=255, required=False)
+    level_id = serializers.IntegerField(required=False)
+    description = serializers.CharField(max_length=255, required=False)
+    level = LevelSerializer(read_only=True)
