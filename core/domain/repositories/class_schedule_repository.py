@@ -39,3 +39,8 @@ class ClassScheduleRepository(ABC):
     def exist_by_parallel_day_time(self, parallel_id: int, day_of_week: str, start_time: time) -> bool:
         pass
 
+    @abstractmethod
+    def find_by_filter(self, **filters) -> List[ClassSchedule]:
+        """Find class schedules by the given filter."""
+        pass
+

@@ -81,5 +81,10 @@ class SubjectRepository(ABC):
             bool: True if the subject exists, False otherwise.
         """
         pass
+
+    @abstractmethod
+    def find_by_filter(self, **filters) -> List[Subject]:
+        """Find subjects by the given filter."""
+        pass
     
     

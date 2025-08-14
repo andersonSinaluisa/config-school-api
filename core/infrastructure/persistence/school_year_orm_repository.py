@@ -111,3 +111,17 @@ class SchoolYearOrmRepository(SchoolYearRepository):
 
     def exist_by_name(self, name):
         return SchoolYearModel.objects.filter(name=name, deleted=False).exists()
+
+    def find_by_filter(self, **filters):
+        queryset = SchoolYearModel.objects.filter(deleted=False)
+        queryset = queryset.filter(**filters).order_by('id')
+        return [
+            SchoolYear(
+                id=school_year.id,
+                name=school_year.name,
+                startDate=school_year.startDate,
+                endDate=school_year.endDate,
+                status=school_year.status,
+            )
+            for school_year in queryset
+        ]

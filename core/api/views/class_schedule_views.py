@@ -25,7 +25,18 @@ class ClassScheduleViewSet(ViewSet):
         return Response(self.serializer_class(schedule).data, status=status.HTTP_201_CREATED)
 
     def list(self, request):
-        schedules = self.list_schedule_service.execute()
+        course_id = request.query_params.get('course_id', None)
+        parallel_id = request.query_params.get('parallel_id', None)
+        school_year_id = request.query_params.get('school_year_id', None)
+        subject_id = request.query_params.get('subject_id', None)
+        day_of_week = request.query_params.get('day_of_week', None)
+        schedules = self.list_schedule_service.execute(
+            course_id=course_id,
+            parallel_id=parallel_id,
+            school_year_id=school_year_id,
+            subject_id=subject_id,
+            day_of_week=day_of_week,
+        )
         paginator = StandardResultsSetPagination(request, schedules)
         paginated_data = paginator.paginate_queryset()
         serializer = self.serializer_class(paginated_data, many=True)

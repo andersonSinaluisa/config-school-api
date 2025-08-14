@@ -82,4 +82,15 @@ class SubjectOrmRepository(SubjectRepository):
     def exist_by_id(self, subject_id: int) -> bool:
         """Check if a subject exists by its ID."""
         return SubjectModel.objects.filter(id=subject_id, deleted=False).exists()
+
+    def find_by_filter(self, **filters):
+        queryset = SubjectModel.objects.filter(deleted=False)
+        queryset = queryset.filter(**filters).order_by('id')
+        return [Subject(
+            id=subject.id,
+            name=subject.name,
+            description=subject.description,
+            code=subject.code,
+            hoursPerWeek=subject.hoursPerWeek
+        ) for subject in queryset]
     

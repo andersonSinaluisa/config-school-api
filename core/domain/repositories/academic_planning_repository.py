@@ -36,3 +36,8 @@ class AcademicPlanningRepository(ABC):
         self, parallel_id: int, subject_id: int, start_date: date
     ) -> bool:
         pass
+
+    @abstractmethod
+    def find_by_filter(self, **filters) -> List[AcademicPlanning]:
+        """Find academic plannings by the given filter."""
+        pass

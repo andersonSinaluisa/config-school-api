@@ -46,10 +46,12 @@ class CourseViewSet(ViewSet):
 
     def list(self, request):
         '''
-        List all courses.
+        List all courses with optional filters.
         '''
-        courses = self.list_course_service.execute()
-       
+        name = request.query_params.get('name', None)
+        level_id = request.query_params.get('level_id', None)
+        courses = self.list_course_service.execute(name=name, level_id=level_id)
+
         paginator = StandardResultsSetPagination(request, courses)
         paginated_data = paginator.paginate_queryset()
 

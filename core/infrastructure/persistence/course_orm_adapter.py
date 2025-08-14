@@ -58,3 +58,14 @@ class CourseORMAdapter(CourseRepository):
     
     def exist_by_id(self, course_id: str) -> bool:
         return CourseModel.objects.filter(id=course_id, deleted=False).exists()
+
+    def find_by_filter(self, **filters):
+        queryset = CourseModel.objects.filter(deleted=False)
+        queryset = queryset.filter(**filters).order_by('id')
+        return [Course(
+            id=course.id,
+            name=course.name,
+            level_id=course.level.id,
+            description=course.description,
+            level=course.level
+        ) for course in queryset]

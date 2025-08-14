@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from typing import List
+
 from core.domain.entities.course import Course
 class CourseRepository(ABC):
     
@@ -36,5 +38,10 @@ class CourseRepository(ABC):
     @abstractmethod
     def exist_by_id(self, course_id: str) -> bool:
         """Check if a course exists by its ID."""
+        pass
+
+    @abstractmethod
+    def find_by_filter(self, **filters) -> List[Course]:
+        """Find courses by the given filter."""
         pass
     
