@@ -37,9 +37,11 @@ class SubjectViewSet(ViewSet):
     
     def list(self, request):
         """
-        List all subjects.
+        List all subjects with optional filters.
         """
-        subjects = self.list_subject_service.execute()
+        name = request.query_params.get('name', None)
+        code = request.query_params.get('code', None)
+        subjects = self.list_subject_service.execute(name=name, code=code)
         paginator = StandardResultsSetPagination(request, subjects)
         paginated_data = paginator.paginate_queryset()
 

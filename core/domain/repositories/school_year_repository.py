@@ -49,3 +49,8 @@ class SchoolYearRepository(ABC):
     def exist_by_name(self, name: str) -> bool:
         """Check if a school year exists by its name."""
         pass
+
+    @abstractmethod
+    def find_by_filter(self, **filters) -> List[SchoolYear]:
+        """Find school years by the given filter."""
+        pass

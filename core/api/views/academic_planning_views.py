@@ -25,7 +25,18 @@ class AcademicPlanningViewSet(ViewSet):
         return Response(self.serializer_class(planning).data, status=status.HTTP_201_CREATED)
 
     def list(self, request):
-        plannings = self.list_planning_service.execute()
+        course_id = request.query_params.get('course_id', None)
+        parallel_id = request.query_params.get('parallel_id', None)
+        school_year_id = request.query_params.get('school_year_id', None)
+        subject_id = request.query_params.get('subject_id', None)
+        topic = request.query_params.get('topic', None)
+        plannings = self.list_planning_service.execute(
+            course_id=course_id,
+            parallel_id=parallel_id,
+            school_year_id=school_year_id,
+            subject_id=subject_id,
+            topic=topic,
+        )
         paginator = StandardResultsSetPagination(request, plannings)
         paginated_data = paginator.paginate_queryset()
         serializer = self.serializer_class(paginated_data, many=True)

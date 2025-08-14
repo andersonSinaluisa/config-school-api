@@ -108,3 +108,25 @@ class AcademicPlanningOrmRepository(AcademicPlanningRepository):
             startDate=start_date,
             deleted=False,
         ).exists()
+
+    def find_by_filter(self, **filters):
+        queryset = AcademicPlanningModel.objects.filter(deleted=False)
+        queryset = queryset.filter(**filters).order_by('id')
+        return [
+            AcademicPlanning(
+                id=p.id,
+                course_id=p.course.id,
+                parallel_id=p.parallel.id,
+                school_year_id=p.schoolYear.id,
+                subject_id=p.subject.id,
+                topic=p.topic,
+                start_date=p.startDate,
+                end_date=p.endDate,
+                description=p.description or '',
+                course=p.course,
+                parallel=p.parallel,
+                school_year=p.schoolYear,
+                subject=p.subject,
+            )
+            for p in queryset
+        ]

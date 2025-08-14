@@ -34,9 +34,11 @@ class SchoolYearViewSet(ViewSet):
     
     def list(self, request, *args, **kwargs):
         """
-        List all school years.
+        List all school years with optional filters.
         """
-        school_years = self.list_school_year_service.execute()
+        name = request.query_params.get('name', None)
+        status = request.query_params.get('status', None)
+        school_years = self.list_school_year_service.execute(name=name, status=status)
         paginator = StandardResultsSetPagination(request, school_years)
         paginated_data = paginator.paginate_queryset()
 
