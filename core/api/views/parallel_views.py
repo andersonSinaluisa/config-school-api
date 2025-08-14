@@ -27,21 +27,20 @@ class ParallelViewSet(ViewSet):
         """
         Handle GET requests to list all resources.
         """
+      
         course_id = request.query_params.get('course_id', None)
-        if course_id:
-            
-            # Implement your logic here
-            parallels = self.get_all_parallels_by_course.execute(course_id)
-            paginator = StandardResultsSetPagination(request, parallels)
-            paginated_data = paginator.paginate_queryset()
-
-            serializer = self.serializer_class(paginated_data, many=True)
-
-            return paginator.get_paginated_response(serializer.data)
-        
-        
+        school_year_id = request.query_params.get('school_year_id', None)
+        name = request.query_params.get('name', None)
+        capacity = request.query_params.get('capacity', None)
+        section_id = request.query_params.get('section_id', None)
         # Implement your logic here
-        parallels = self.get_all_parallels.execute()
+        parallels = self.get_all_parallels.execute(
+            course_id=course_id,
+            school_year_id=school_year_id,
+            name=name,
+            capacity=capacity,
+            section_id=section_id
+        )
         paginator = StandardResultsSetPagination(request, parallels)
         paginated_data = paginator.paginate_queryset()
 

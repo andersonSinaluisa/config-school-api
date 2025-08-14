@@ -128,4 +128,23 @@ class ParallelORMRepository(ParallelRepository):
             section=parallel.section,
             school_year=parallel.schoolYear
         ) for parallel in parallels]
-        
+
+    def find_by_filter(self, **filters):
+        """
+        Find parallels by the given filter.
+        :param filter: The filter to apply.
+        :return: A list of parallels matching the filter.
+        """
+        queryset = ParallelModel.objects.filter(deleted=False)
+        queryset = queryset.filter(**filters).order_by('id')
+        return [Parallel(
+            id=parallel.id,
+            name=parallel.name,
+            course_id=parallel.course.id,
+            capacity=parallel.capacity,
+            section_id=parallel.section.id,
+            school_year_id=parallel.schoolYear.id,
+            course=parallel.course,
+            section=parallel.section,
+            school_year=parallel.schoolYear
+        ) for parallel in queryset]

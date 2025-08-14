@@ -100,3 +100,23 @@ class ClassScheduleOrmRepository(ClassScheduleRepository):
             deleted=False
         ).exists()
 
+    def filter_by_parallel_and_subject(self, parallel_id: int, subject_id: int):
+        schedules = ClassScheduleModel.objects.filter(
+            parallel_id=parallel_id,
+            subject_id=subject_id,
+            deleted=False
+        )
+        return [ClassSchedule(
+            id=schedule.id,
+            course_id=schedule.course.id,
+            parallel_id=schedule.parallel.id,
+            school_year_id=schedule.schoolYear.id,
+            subject_id=schedule.subject.id,
+            day_of_week=schedule.dayOfWeek,
+            start_time=schedule.startTime,
+            end_time=schedule.endTime,
+            course=schedule.course,
+            parallel=schedule.parallel,
+            school_year=schedule.schoolYear,
+            subject=schedule.subject,
+        ) for schedule in schedules]

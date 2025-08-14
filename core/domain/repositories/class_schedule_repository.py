@@ -16,6 +16,10 @@ class ClassScheduleRepository(ABC):
         pass
 
     @abstractmethod
+    def filter_by_parallel_and_subject(self, parallel_id: int, subject_id: int) -> List[ClassSchedule]:
+        pass
+
+    @abstractmethod
     def get(self, schedule_id: int) -> ClassSchedule:
         pass
 

@@ -60,7 +60,7 @@ class CourseSubjectModel(BaseModel):
 
 class ParallelModel(BaseModel):
     id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=255, unique=True)
+    name = models.CharField(max_length=255)
     course = models.ForeignKey(CourseModel, on_delete=models.CASCADE, related_name='parallels')
     capacity = models.IntegerField()
     section = models.ForeignKey('SectionModel', on_delete=models.CASCADE, related_name='parallels')

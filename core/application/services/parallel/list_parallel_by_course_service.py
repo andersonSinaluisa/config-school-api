@@ -4,15 +4,31 @@
 from core.domain.repositories.parallel_repository import ParallelRepository
 
 
-class ListParallelByCourseService:
+from typing import Optional
+
+
+class ListParallelService:
     def __init__(self, parallel_repository: ParallelRepository):
         self.parallel_repository = parallel_repository
 
-    def execute(self, course_id: str):
+    def execute(
+        self,
+        *,
+        course_id: Optional[str] = None,
+        school_year_id: Optional[str] = None,
+        name: Optional[str] = None,
+        is_active: Optional[bool] = None,
+    ):
         """
-        Retrieves all parallels associated with a specific course.
-
-        :param course_id: The ID of the course for which to retrieve parallels.
-        :return: A list of parallels associated with the specified course.
+        Devuelve paralelos según filtros opcionales.
+        Si no hay filtros, devuelve todos.
         """
-        return self.parallel_repository.find_by_course_id(course_id)
+        filters = {
+            "course_id": course_id,
+            "school_year_id": school_year_id,
+            "name__icontains": name,      # ejemplo de búsqueda parcial
+            "is_active": is_active,
+        }
+        # elimina None
+        filters = {k: v for k, v in filters.items() if v is not None}
+        return self.parallel_repository.find_by_filter(**filters)

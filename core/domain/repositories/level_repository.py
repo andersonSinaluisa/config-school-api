@@ -34,3 +34,8 @@ class LevelRepository(ABC):
     def exist_by_id(self, level_id: int) -> bool:
         """Check if a level exists by its ID."""
         pass
+    
+    @abstractmethod
+    def exist_exclude_id(self, name: str, level_id: int) -> bool:
+        """Check if a level exists by its name, excluding a specific ID."""
+        pass

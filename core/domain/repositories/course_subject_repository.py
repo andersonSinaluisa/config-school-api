@@ -33,8 +33,11 @@ class CourseSubjectRepository(ABC):
     @abstractmethod
     def exist_by_course_and_subject(self, course_id:int, subject_id:int)->bool:
         pass
-    
-    
+
+    @abstractmethod
+    def get_by_course_and_subject(self, course_id:int, subject_id:int)->CourseSubject:
+        pass
+
     @abstractmethod
     def get_by_course(self, course_id:int)->List[CourseSubject]:
         pass

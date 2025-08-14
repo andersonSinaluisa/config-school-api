@@ -553,6 +553,7 @@ class Container(containers.DeclarativeContainer):
         parallel_repository=list_parallel_respository,
         school_year_repository=school_year_repository,
         subject_repository=subject_repository,
+        course_subject_repository=course_subject_repository
     )
 
     list_class_schedule_service = providers.Factory(

@@ -110,4 +110,11 @@ class ParallelRepository(ABC):
         """
         pass
     
-    
+    @abstractmethod
+    def find_by_filter(self, **filters) -> List[Parallel]:
+        """
+        Find parallels by the given filter.
+        :param filter: The filter to apply.
+        :return: A list of parallels matching the filter.
+        """
+        pass

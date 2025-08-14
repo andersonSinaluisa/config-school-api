@@ -13,8 +13,8 @@ class UpdateLevelService:
         level = self.level_repository.exist_by_id(id)
         if not level:
             raise NotFound(f"Level with ID {id} not found")
-        
-        if self.level_repository.exist_by_name(name):
+
+        if self.level_repository.exist_exclude_id(name, id):
             raise ValidationError(f"Level with name {name} already exists")
         
         updated_level = Level(

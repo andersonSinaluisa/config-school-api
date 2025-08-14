@@ -83,9 +83,26 @@ class CourseSubjectOrmRepository(CourseSubjectRepository):
             subject_id=subject_id,
             deleted=False
         ).exists()
-        
+    
+    def get_by_course_and_subject(self, course_id, subject_id):
+        try:
+            course_subject = CourseSubjectModel.objects.get(
+                course_id=course_id,
+                subject_id=subject_id,
+                deleted=False
+            )
+            return CourseSubject(
+                courseId=course_subject.id,
+                hoursPerWeek=course_subject.hoursPerWeek,
+                id=course_subject.course.id,
+                subjectId=course_subject.subject.id,
+                isRequired=course_subject.isRequired,
+                course=course_subject.course,
+                subject=course_subject.subject
+            )
+        except CourseSubjectModel.DoesNotExist:
+            return None
 
-        
     def get_by_course(self, course_id):
         course_subjects = CourseSubjectModel.objects.filter(
             course_id=course_id, deleted=False).order_by('id')
