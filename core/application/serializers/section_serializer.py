@@ -13,9 +13,11 @@ class SectionSerializer(Serializer):
     break_count = IntegerField(min_value=0)
     break_duration = CharField(max_length=5)  # HH:MM format
     days = CharField(max_length=10)
+    class_duration = CharField(max_length=5)  # HH:MM format
 
 class SectionPartialSerializer(Serializer):
     id = IntegerField(read_only=True)
     name = CharField(max_length=255)
     type = CharField(max_length=50)
+    class_duration = CharField(max_length=5)  # HH:MM format
     description = CharField(max_length=500, allow_blank=True, required=False)

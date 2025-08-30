@@ -73,6 +73,7 @@ from core.application.services.class_schedules.list_class_schedule_service impor
 from core.application.services.class_schedules.get_class_schedule_service import GetClassScheduleService
 from core.application.services.class_schedules.update_class_schedule_service import UpdateClassScheduleService
 from core.application.services.class_schedules.delete_class_schedule_service import DeleteClassScheduleService
+from core.application.services.class_schedules.generate_class_schedule_service import GenerateClassScheduleService
 from core.application.services.academic_plannings.create_academic_planning_service import CreateAcademicPlanningService
 from core.application.services.academic_plannings.list_academic_planning_service import ListAcademicPlanningService
 from core.application.services.academic_plannings.get_academic_planning_service import GetAcademicPlanningService
@@ -580,6 +581,11 @@ class Container(containers.DeclarativeContainer):
         class_schedule_repository=class_schedule_repository,
     )
 
+    generate_class_schedule_service = providers.Factory(
+        GenerateClassScheduleService,
+        parallel_repository=list_parallel_respository,
+        course_subject_repository=course_subject_repository
+    )
     '''
     ===========
     Academic Planning Services

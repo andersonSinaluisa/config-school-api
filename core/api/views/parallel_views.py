@@ -28,11 +28,11 @@ class ParallelViewSet(ViewSet):
         Handle GET requests to list all resources.
         """
       
-        course_id = request.query_params.get('course_id', None)
-        school_year_id = request.query_params.get('school_year_id', None)
+        course_id = request.query_params.get('courseId', None)
+        school_year_id = request.query_params.get('schoolYearId', None)
         name = request.query_params.get('name', None)
         capacity = request.query_params.get('capacity', None)
-        section_id = request.query_params.get('section_id', None)
+        section_id = request.query_params.get('sectionId', None)
         # Implement your logic here
         parallels = self.get_all_parallels.execute(
             course_id=course_id,

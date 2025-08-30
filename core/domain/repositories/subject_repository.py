@@ -83,6 +83,17 @@ class SubjectRepository(ABC):
         pass
 
     @abstractmethod
+    def exist_by_name_exclude_id(self, name: str, subject_id: int) -> bool:
+        """
+        Check if a subject exists by its name. Excluding a specific ID.
+        Args:
+            name (str): The name of the subject to check.
+        Returns:
+            bool: True if the subject exists, False otherwise.
+        """
+        pass
+
+    @abstractmethod
     def find_by_filter(self, **filters) -> List[Subject]:
         """Find subjects by the given filter."""
         pass

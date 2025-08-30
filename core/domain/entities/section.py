@@ -14,7 +14,7 @@ class Section:
     break_count: int
     break_duration: datetime.time
     days: list[str] = None
-    
+    class_duration: datetime.time = None
     
     def __post_init__(self):
         if not self.name:

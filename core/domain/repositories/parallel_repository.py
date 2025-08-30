@@ -26,6 +26,8 @@ class ParallelRepository(ABC):
         pass
     
     
+
+
     @abstractmethod
     def create(self, parallel: Parallel) -> Parallel:
         """

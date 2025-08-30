@@ -1,4 +1,6 @@
 from abc import ABC, abstractmethod
+from typing import List
+from core.domain.entities.level import Level
 class LevelRepository(ABC):
     @abstractmethod
     def get(self, level_id: int):
@@ -38,4 +40,9 @@ class LevelRepository(ABC):
     @abstractmethod
     def exist_exclude_id(self, name: str, level_id: int) -> bool:
         """Check if a level exists by its name, excluding a specific ID."""
+        pass
+
+    @abstractmethod
+    def find_by_filter(self, **filters) -> List[Level]:
+        """Find courses by the given filter."""
         pass

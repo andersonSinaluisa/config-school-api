@@ -2,6 +2,8 @@ from core.domain.entities.level import Level
 from core.domain.repositories.level_repository import LevelRepository
 from core.models import LevelModel
 from django.utils import timezone
+from typing import List
+
 
 class LevelOrmRepository(LevelRepository):
     """Level ORM Adapter for interacting with the LevelModel."""
@@ -72,3 +74,15 @@ class LevelOrmRepository(LevelRepository):
     def exist_by_id(self, level_id: int) -> bool:
         """Check if a level exists by its ID."""
         return LevelModel.objects.filter(id=level_id, deleted=False).exists()
+
+    def find_by_filter(self, **filters) -> List[Level]:
+        """Find levels by the given filter."""
+        queryset = LevelModel.objects.filter(deleted=False)
+        for key, value in filters.items():
+            queryset = queryset.filter(**{key: value})
+        return [Level(
+            id=level.id,
+            name=level.name,
+            description=level.description,
+            order=level.order
+        ) for level in queryset]

@@ -1,6 +1,7 @@
 from rest_framework.viewsets import ViewSet
 from rest_framework.response import Response
 from rest_framework import status
+from rest_framework.decorators import action
 
 from core.api.configuration.pagination import StandardResultsSetPagination
 from core.application.serializers.class_schedule_serializer import ClassScheduleSerializer
@@ -17,6 +18,7 @@ class ClassScheduleViewSet(ViewSet):
         self.get_schedule_service = Container.get_class_schedule_service()
         self.update_schedule_service = Container.update_class_schedule_service()
         self.delete_schedule_service = Container.delete_class_schedule_service()
+        self.generate_schedule_service = Container.generate_class_schedule_service()
 
     def create(self, request):
         serializer = self.serializer_class(data=request.data)
@@ -57,3 +59,13 @@ class ClassScheduleViewSet(ViewSet):
         self.delete_schedule_service.execute(pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+
+    @action(detail=False, methods=['post'])
+    def generate(self, request):
+        parallel_id = request.data.get('parallel_id')
+        if not parallel_id:
+            return Response({"error": "parallel_id is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+        schedules = self.generate_schedule_service.execute(parallel_id)
+        serializer = self.serializer_class(schedules, many=True)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)

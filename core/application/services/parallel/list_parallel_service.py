@@ -22,7 +22,7 @@ class ListParallelService:
         """
         filters = {
             "course_id": course_id,
-            "school_year_id": school_year_id,
+            "schoolYear_id": school_year_id,
             "name__icontains": name,  # example of partial search
             "capacity": capacity,
             "section_id": section_id

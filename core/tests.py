@@ -1,4 +1,4 @@
 from django.test import TestCase
 
 # Create your tests here.
-from core.api.views.course_view_test import CourseAPITestCase
+from tests.application.services.test_generate_class_schedule_service import GenerateClassScheduleService

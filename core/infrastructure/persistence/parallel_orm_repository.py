@@ -6,6 +6,10 @@ from core.domain.repositories.parallel_repository import ParallelRepository
 from core.models import ParallelModel
 from django.utils import timezone
 
+from core.application.mappers.course_mapper import course_model_to_entity
+from core.application.mappers.section_mapper import section_model_to_entity
+from core.application.mappers.school_year_mapper import school_year_model_to_entity
+
 class ParallelORMRepository(ParallelRepository):
     def all(self):
         """Get all parallels."""
@@ -32,10 +36,14 @@ class ParallelORMRepository(ParallelRepository):
             capacity=parallel.capacity,
             section_id=parallel.section.id,
             school_year_id=parallel.schoolYear.id,
-            course=parallel.course,
-            section=parallel.section,
-            school_year=parallel.schoolYear
+            course=course_model_to_entity(parallel.course),
+
+            section=section_model_to_entity(parallel.section),
+               
+            school_year= school_year_model_to_entity(parallel.schoolYear)
         )
+        
+    
 
     def create(self, parallel):
         """Create a new parallel."""
@@ -90,7 +98,12 @@ class ParallelORMRepository(ParallelRepository):
             course_id=parallel.course.id,
             capacity=parallel.capacity,
             section_id=parallel.section.id,
-            school_year_id=parallel.schoolYear.id
+            school_year_id=parallel.schoolYear.id,
+            course=course_model_to_entity(parallel.course),
+
+            section=section_model_to_entity(parallel.section),
+
+            school_year=school_year_model_to_entity(parallel.schoolYear)
         )
 
     def exists_by_name(self, name):
@@ -117,16 +130,19 @@ class ParallelORMRepository(ParallelRepository):
         """Find all parallels by course ID."""
         parallels = ParallelModel.objects.filter(course_id=course_id, deleted=False).order_by('id')
         
-        return [Parallel(
+        return [ Parallel(
             id=parallel.id,
             name=parallel.name,
             course_id=parallel.course.id,
             capacity=parallel.capacity,
             section_id=parallel.section.id,
             school_year_id=parallel.schoolYear.id,
-            course=parallel.course,
-            section=parallel.section,
-            school_year=parallel.schoolYear
+            course=course_model_to_entity(parallel.course),
+
+            section=section_model_to_entity(parallel.section),
+
+            school_year=school_year_model_to_entity(parallel.schoolYear)
+        
         ) for parallel in parallels]
 
     def find_by_filter(self, **filters):
@@ -144,7 +160,10 @@ class ParallelORMRepository(ParallelRepository):
             capacity=parallel.capacity,
             section_id=parallel.section.id,
             school_year_id=parallel.schoolYear.id,
-            course=parallel.course,
-            section=parallel.section,
-            school_year=parallel.schoolYear
+            course=course_model_to_entity(parallel.course),
+
+            section=section_model_to_entity(parallel.section),
+
+            school_year=school_year_model_to_entity(parallel.schoolYear)
+
         ) for parallel in queryset]

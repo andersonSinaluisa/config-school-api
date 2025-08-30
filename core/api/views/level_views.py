@@ -35,7 +35,8 @@ class LevelViewSet(ViewSet):
         """
         List all levels.
         """
-        levels = self.list_level_service.execute()
+        name = request.query_params.get("search", "")
+        levels = self.list_level_service.execute(name=name)
         paginator = StandardResultsSetPagination(request, levels)
         paginated_data = paginator.paginate_queryset()
 

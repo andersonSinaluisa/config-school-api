@@ -65,7 +65,8 @@ class SubjectViewSet(ViewSet):
         """
         serializer = self.serializer_class(data=request.data)
         serializer.is_valid(raise_exception=True)
-        subject = self.update_subject_service.execute(pk, **serializer.validated_data)
+        subject = self.update_subject_service.execute(
+            id=pk, **serializer.validated_data)
         return Response(self.serializer_class(subject).data, status=status.HTTP_200_OK)
     
     

@@ -1,8 +1,8 @@
 from rest_framework import serializers
 
 from core.application.serializers.course_serializer import CourseSerializer
-from core.application.serializers.section_serializer import SectionPartialSerializer
-
+from core.application.serializers.section_serializer import SectionSerializer
+from core.application.serializers.school_year_serializer import SchoolYearSerializer
 class ParallelSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=100)
@@ -11,8 +11,8 @@ class ParallelSerializer(serializers.Serializer):
     section_id = serializers.IntegerField()
     school_year_id = serializers.IntegerField()
     course = CourseSerializer(read_only=True)
-    section = SectionPartialSerializer(read_only=True)
-    
+    section = SectionSerializer(read_only=True)
+    school_year = SchoolYearSerializer(read_only=True)
 class ParallelPartialSerializer(serializers.Serializer):
     id = serializers.IntegerField(read_only=True)
     name = serializers.CharField(max_length=100, required=False)

@@ -93,4 +93,7 @@ class SubjectOrmRepository(SubjectRepository):
             code=subject.code,
             hoursPerWeek=subject.hoursPerWeek
         ) for subject in queryset]
-    
+
+    def exist_by_name_exclude_id(self, name: str, subject_id: int) -> bool:
+        """Check if a subject exists by its name, excluding a specific ID."""
+        return SubjectModel.objects.filter(name=name, deleted=False).exclude(id=subject_id).exists()

@@ -7,7 +7,7 @@ from core.domain.repositories.parallel_repository import ParallelRepository
 from typing import Optional
 
 
-class ListParallelService:
+class ListParallelByCourseService:
     def __init__(self, parallel_repository: ParallelRepository):
         self.parallel_repository = parallel_repository
 

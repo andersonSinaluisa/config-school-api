@@ -98,7 +98,27 @@ class SchoolYearModel(BaseModel):
         verbose_name = 'School Year'
         ordering = ['startDate']
         
+class SectionBreakModel(BaseModel):
+    id = models.AutoField(primary_key=True)
+    section = models.ForeignKey("SectionModel", on_delete=models.CASCADE, related_name="breaks")
+    day = models.CharField(max_length=10, choices=[
+        ('monday', 'Monday'),
+        ('tuesday', 'Tuesday'),
+        ('wednesday', 'Wednesday'),
+        ('thursday', 'Thursday'),
+        ('friday', 'Friday'),
+        ('saturday', 'Saturday'),
+        ('sunday', 'Sunday'),
+    ])
+    start_time = models.TimeField()
+    end_time = models.TimeField()
 
+    class Meta:
+        db_table = "section_break"
+        verbose_name = "Section Break"
+        verbose_name_plural = "Section Breaks"
+        ordering = ["day", "start_time"]
+        
 class SectionModel(BaseModel):
     TYPE_CHOICES = [
         ('morning', 'Morning'),
@@ -116,6 +136,7 @@ class SectionModel(BaseModel):
     hasBreak = models.BooleanField(default=False)
     breakCount = models.IntegerField(default=0)
     breakDuration = models.IntegerField(default=0)
+    class_duration = models.TimeField(default='00:45:00')
     days = models.CharField(max_length=255, blank=True, null=True)  # Comma-separated list of days
     
     def __str__(self):
