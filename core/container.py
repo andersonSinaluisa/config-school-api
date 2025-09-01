@@ -94,6 +94,7 @@ from core.infrastructure.persistence.attendance_code_orm_repository import Atten
 from core.infrastructure.persistence.behavior_scale_orm_repository import BehaviorScaleOrmRepository
 from core.infrastructure.persistence.class_schedule_orm_repository import ClassScheduleOrmRepository
 from core.infrastructure.persistence.academic_planning_orm_repository import AcademicPlanningOrmRepository
+from core.infrastructure.persistence.section_break_orm_repository import SectionBreakOrmRepository
 from core.application.services.course_subjects.list_from_couse_service import ListFromCourseService
 from core.application.services.course_subjects.remove_range_from_course import RemoveRangeFromCourse
 class Container(containers.DeclarativeContainer):
@@ -112,6 +113,7 @@ class Container(containers.DeclarativeContainer):
     behavior_scale_repository = providers.Singleton(BehaviorScaleOrmRepository)
     class_schedule_repository = providers.Singleton(ClassScheduleOrmRepository)
     academic_planning_repository = providers.Singleton(AcademicPlanningOrmRepository)
+    section_break_repository = providers.Singleton(SectionBreakOrmRepository)
     '''
     ==========
     Course Services
@@ -584,7 +586,9 @@ class Container(containers.DeclarativeContainer):
     generate_class_schedule_service = providers.Factory(
         GenerateClassScheduleService,
         parallel_repository=list_parallel_respository,
-        course_subject_repository=course_subject_repository
+        course_subject_repository=course_subject_repository,
+        section_break_repository=section_break_repository,
+        class_schedule_repository=class_schedule_repository,
     )
     '''
     ===========
@@ -623,5 +627,44 @@ class Container(containers.DeclarativeContainer):
     delete_academic_planning_service = providers.Factory(
         DeleteAcademicPlanningService,
         academic_planning_repository=academic_planning_repository,
+    )
+
+    '''
+    ==========
+    Section Break Services
+    ==========
+    '''
+
+    from core.application.services.section_breaks.create_section_break_service import CreateSectionBreakService
+    from core.application.services.section_breaks.list_section_break_service import ListSectionBreakService
+    from core.application.services.section_breaks.get_section_break_service import GetSectionBreakService
+    from core.application.services.section_breaks.update_section_break_service import UpdateSectionBreakService
+    from core.application.services.section_breaks.delete_section_break_service import DeleteSectionBreakService
+
+    create_section_break_service = providers.Factory(
+        CreateSectionBreakService,
+        section_break_repository=section_break_repository,
+        section_repository=section_repository,
+    )
+
+    list_section_break_service = providers.Factory(
+        ListSectionBreakService,
+        section_break_repository=section_break_repository,
+    )
+
+    get_section_break_service = providers.Factory(
+        GetSectionBreakService,
+        section_break_repository=section_break_repository,
+    )
+
+    update_section_break_service = providers.Factory(
+        UpdateSectionBreakService,
+        section_break_repository=section_break_repository,
+        section_repository=section_repository,
+    )
+
+    delete_section_break_service = providers.Factory(
+        DeleteSectionBreakService,
+        section_break_repository=section_break_repository,
     )
     

@@ -2,7 +2,7 @@ from core.domain.entities.class_schedule import ClassSchedule
 from core.domain.repositories.class_schedule_repository import ClassScheduleRepository
 from core.models import ClassScheduleModel
 from django.utils import timezone
-
+from core.application.mappers.class_schedule_mapper import class_schedule_from_model
 
 class ClassScheduleOrmRepository(ClassScheduleRepository):
 
@@ -71,16 +71,7 @@ class ClassScheduleOrmRepository(ClassScheduleRepository):
         schedule_model.startTime = schedule.start_time
         schedule_model.endTime = schedule.end_time
         schedule_model.save()
-        return ClassSchedule(
-            id=schedule_model.id,
-            course_id=schedule_model.course.id,
-            parallel_id=schedule_model.parallel.id,
-            school_year_id=schedule_model.schoolYear.id,
-            subject_id=schedule_model.subject.id,
-            day_of_week=schedule_model.dayOfWeek,
-            start_time=schedule_model.startTime,
-            end_time=schedule_model.endTime,
-        )
+        return class_schedule_from_model(schedule_model)
 
     def delete(self, schedule_id):
         schedule_model = ClassScheduleModel.objects.get(id=schedule_id, deleted=False)
@@ -101,25 +92,11 @@ class ClassScheduleOrmRepository(ClassScheduleRepository):
         ).exists()
 
     def filter_by_parallel_and_subject(self, parallel_id: int, subject_id: int):
-        schedules = ClassScheduleModel.objects.filter(
-            parallel_id=parallel_id,
-            subject_id=subject_id,
-            deleted=False
-        )
-        return [ClassSchedule(
-            id=schedule.id,
-            course_id=schedule.course.id,
-            parallel_id=schedule.parallel.id,
-            school_year_id=schedule.schoolYear.id,
-            subject_id=schedule.subject.id,
-            day_of_week=schedule.dayOfWeek,
-            start_time=schedule.startTime,
-            end_time=schedule.endTime,
-            course=schedule.course,
-            parallel=schedule.parallel,
-            school_year=schedule.schoolYear,
-            subject=schedule.subject,
-        ) for schedule in schedules]
+        qs = ClassScheduleModel.objects.filter(
+            parallel_id=parallel_id, deleted=False)
+        if subject_id:
+            qs = qs.filter(subject_id=subject_id)
+        return [class_schedule_from_model(schedule) for schedule in qs]
 
     def find_by_filter(self, **filters):
         queryset = ClassScheduleModel.objects.filter(deleted=False)

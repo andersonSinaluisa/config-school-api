@@ -102,13 +102,13 @@ class SectionBreakModel(BaseModel):
     id = models.AutoField(primary_key=True)
     section = models.ForeignKey("SectionModel", on_delete=models.CASCADE, related_name="breaks")
     day = models.CharField(max_length=10, choices=[
-        ('monday', 'Monday'),
-        ('tuesday', 'Tuesday'),
-        ('wednesday', 'Wednesday'),
-        ('thursday', 'Thursday'),
-        ('friday', 'Friday'),
-        ('saturday', 'Saturday'),
-        ('sunday', 'Sunday'),
+        ('Lunes', 'Monday'),
+        ('Martes', 'Tuesday'),
+        ('Miércoles', 'Wednesday'),
+        ('Jueves', 'Thursday'),
+        ('Viernes', 'Friday'),
+        ('Sábado', 'Saturday'),
+        ('Domingo', 'Sunday'),
     ])
     start_time = models.TimeField()
     end_time = models.TimeField()
